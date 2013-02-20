@@ -2,6 +2,9 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
 
+#irreversibly encrypts the password to form the password hash
+gem 'bcrypt-ruby', '3.0.1'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -9,6 +12,11 @@ gem 'pg'
 
 group :development, :test do
   gem 'rspec-rails'
+end
+
+group :development do
+  #annotates the models
+  gem 'annotate', '2.5.0'
 end
 
 # Gems used only for assets and not required

@@ -14,6 +14,7 @@ describe "StaticPages" do
     it "should have the right links on the layout" do
       click_link "sign_up"
       page.should have_selector('h3',    text: 'Sign up')
+
       #click_link "Sign in"
       #page.should # fill in
       #click_link "Sign up as guest"
