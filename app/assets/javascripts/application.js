@@ -13,3 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+$( document ).bind( "mobileinit", function() {
+    $.mobile.defaultPageTransition = "none";
+    $.mobile.transitionFallbacks.flow = "none";
+});
