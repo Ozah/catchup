@@ -1,7 +1,6 @@
 <% content_for :heading do %>
   <div data-theme="a" data-role="header">
-    <a data-role="button" data-rel="back" data-transition="none" href="#page11"
-       class="ui-btn-left">
+    <a data-role="button" href=<%= start_path%> class="ui-btn-left">
       Back
     </a>
     <h3>
@@ -14,16 +13,16 @@
   <%= render 'shared/error_messages' %>
   <fieldset>
     <div data-role="fieldcontain">
-      <%= f.text_field :name, :placeholder => "Name" %>
+      <%= f.text_field :name, placeholder: "Name" %>
     </div>
     <div data-role="fieldcontain">
-      <%= f.email_field :email, :placeholder => "Email" %>
+      <%= f.email_field :email, placeholder: "Email" %>
     </div>
     <div data-role="fieldcontain">
-      <%= f.password_field :password, :placeholder => "Password" %>
+      <%= f.password_field :password, placeholder: "Password" %>
     </div>
     <div data-role="fieldcontain">
-      <%= f.password_field :password_confirmation, :placeholder => "Password confirmation" %>
+      <%= f.password_field :password_confirmation, placeholder: "Password confirmation" %>
     </div>
     <%= f.submit "Create my account" %>
   </fieldset>

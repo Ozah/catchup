@@ -1,11 +1,14 @@
 Catchup::Application.routes.draw do
   resources :users
+  resources :sessions, only: [:new, :create, :destroy]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
   root :to => 'static_pages#start'
 
   match '/signup',  to: 'users#new'
+  match '/signin',  to: 'sessions#new'
+  match '/signout', to: 'sessions#destroy', via: :delete
 
   match '/start', to: "static_pages#start"
   match '/help', to: "static_pages#help"

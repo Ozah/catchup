@@ -21,13 +21,16 @@
 
     <div id="container">
       <% flash.each do |key, value| %>
-        <div id="alert-<%= key %>"><%= value %></div>
+        <%= content_tag(:div, value, id: "alert-#{key}") %>
+        <!--<div id="alert-<%= key %>"><%= value %></div>-->
       <% end %>
 
 
     <div data-role="content">
       <%= yield %>
-      <%= debug(params) if Rails.env.development? %>
+      <div data-role="content" data-position="fixed">
+        <%= debug(params) if Rails.env.development? %>
+      </div>
     </div>
   </div>
 </body>

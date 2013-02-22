@@ -18,3 +18,8 @@ $( document ).bind( "mobileinit", function() {
     $.mobile.defaultPageTransition = "none";
     $.mobile.transitionFallbacks.flow = "none";
 });
+
+//prevents scrolling of the page
+$(document).bind("touchmove",function(event){
+    event.preventDefault();
+});

@@ -1,10 +1,12 @@
 <% content_for :heading do %>
   <div data-theme="a" data-role="header">
+    <%= link_to "Sign out", signout_path, method: "delete",
+                "data-role" => "button", "class" => "ui-btn-left" %>
     <h3>
       <%= @user.name %>
     </h3>
   </div>
 <% end %>
 
-<%= gravatar_for @user %>
+<%= gravatar_for @user, size: 80 %>
 <%= @user.name %>
