@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.12'
 
 #irreversibly encrypts the password to form the password hash
 gem 'bcrypt-ruby', '3.0.1'
@@ -9,6 +9,8 @@ gem 'bcrypt-ruby', '3.0.1'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
+gem 'haml'
+gem 'faker', '1.0.1'
 
 group :development, :test do
   gem 'rspec-rails'

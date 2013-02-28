@@ -3,9 +3,9 @@
     <a data-role="button" href=<%= start_path%> class="ui-btn-left">
       Back
     </a>
-    <h3>
+    <h1>
       Sign up
-    </h3>
+    </h1>
   </div>
 <% end %>
 

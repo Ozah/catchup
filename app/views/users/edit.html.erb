@@ -1,0 +1,33 @@
+<% content_for :heading do %>
+  <div data-theme="a" data-role="header">
+    <a data-role="button" href=<%= user_path %> class="ui-btn-left">
+    Back
+    </a>
+    <h1>
+      Edit user
+    </h1>
+  </div>
+<% end %>
+
+<%= form_for @user,  html: { :'data-ajax' => 'false'} do |f| %>
+  <%= render 'shared/error_messages' %>
+  <fieldset>
+    <div data-role="fieldcontain">
+      <%= f.text_field :name, placeholder: "Name" %>
+    </div>
+    <div data-role="fieldcontain">
+      <%= f.email_field :email, placeholder: "Email" %>
+    </div>
+    <div data-role="fieldcontain">
+      <%= f.password_field :password, placeholder: "Password" %>
+    </div>
+    <div data-role="fieldcontain">
+      <%= f.password_field :password_confirmation, placeholder: "Password confirmation" %>
+    </div>
+    <%= f.submit "Save changes" %>
+  </fieldset>
+  <div>
+    <%= gravatar_for @user %>
+    <a href="http://gravatar.com/emails">change</a>
+  </div>
+<% end %>

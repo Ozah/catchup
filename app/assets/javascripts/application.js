@@ -14,12 +14,13 @@
 //= require jquery_ujs
 //= require_tree .
 
-$( document ).bind( "mobileinit", function() {
-    $.mobile.defaultPageTransition = "none";
-    $.mobile.transitionFallbacks.flow = "none";
+$(document).bind( "mobileinit", function() {
+    $.mobile.touchOverflowEnabled = true;
+//    doesn't work..
+    $.mobile.defaultPageTransition = "turn";
 });
 
 //prevents scrolling of the page
-$(document).bind("touchmove",function(event){
-    event.preventDefault();
-});
+//$(document).bind("touchmove",function(event){
+//    event.preventDefault();
+//});

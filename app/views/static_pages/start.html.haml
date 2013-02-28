@@ -1,0 +1,8 @@
+%div
+  %p{:style => "text-align: center; "}
+    %span{:style => "font-size: xx-large; font-family: 'comic sans ms', sans-serif; color: rgb(51, 102, 255); "}
+      %b
+        CATCHUP
+= link_to "Try catchup as a guest", "#", "id" => "sign_up_guest", "data-role" => "button", "data-theme" => "c"
+= link_to "Sign up", signup_url, "id" => "sign_up", "data-role" => "button", "data-theme" => "b"
+= link_to "Sign in", signin_url, "id" => "sign_in",  "data-role" => "button", "data-theme" => "b"

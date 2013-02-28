@@ -2,11 +2,14 @@
   <div data-theme="a" data-role="header">
     <%= link_to "Sign out", signout_path, method: "delete",
                 "data-role" => "button", "class" => "ui-btn-left" %>
-    <h3>
+    <h1>
       <%= @user.name %>
-    </h3>
+    </h1>
   </div>
 <% end %>
-
-<%= gravatar_for @user, size: 80 %>
-<%= @user.name %>
+<div data-role="content">
+  <%= gravatar_for @user, size: 80 %>
+  <%= @user.name %>
+</div>
+<%= link_to "Edit Profile", edit_user_path(current_user),
+            "data-role" => "button" %>
