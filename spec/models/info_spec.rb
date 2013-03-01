@@ -29,12 +29,12 @@ describe Info do
   end
 
   describe "with blank content" do
-    before { @micropost.content = " " }
+    before { @info.content = " " }
     it { should_not be_valid }
   end
 
   describe "with content that is too long" do
-    before { @micropost.content = "a" * 81 }
+    before { @info.content = "a" * 81 }
     it { should_not be_valid }
   end
 
