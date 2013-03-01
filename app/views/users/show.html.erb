@@ -7,9 +7,32 @@
     </h1>
   </div>
 <% end %>
+
 <div data-role="content">
   <%= gravatar_for @user, size: 80 %>
   <%= @user.name %>
+  <%= link_to "Edit profile", edit_user_path(current_user),
+              "data-role" => "button",
+              "data-inline" => "true",
+              "data-icon" => "gear",
+              "data-iconpos" => "notext",
+              "style" => "float: right",
+              "data-theme" => "a" %>
+
 </div>
-<%= link_to "Edit Profile", edit_user_path(current_user),
-            "data-role" => "button" %>
+
+<div data-role="content">
+  My links:
+  <% if @user.infos.any? %>
+    <ul data-role="listview" data-inset="true" data-split-icon="delete" data-split-theme="a">
+      <%= render @infos %>
+    </ul>
+  <% end %>
+
+  <%= link_to "Add link", new_info_path,
+              "data-role" => "button",
+              "data-inline" => "true",
+              "data-icon" => "add",
+              "data-iconpos" => "notext",
+              "data-theme" => "a" %>
+</div>

@@ -30,7 +30,7 @@ describe "Authentication" do
       before { sign_in user }
 
       it { should have_selector('h1', text: user.name) }
-      it { should have_link('Edit Profile', href: edit_user_path(user)) }
+      it { should have_link('', href: edit_user_path(user)) }
       it { should have_link('Sign out', href: signout_path) }
       it { should_not have_link('Sign in', href: signin_path) }
 
@@ -73,6 +73,19 @@ describe "Authentication" do
       describe "submitting a PUT request to the Users#update action" do
         before { put user_path(wrong_user) }
         specify { response.should redirect_to(root_path) }
+      end
+    end
+
+    describe "in the Infos controller" do
+
+      describe "submitting to the create action" do
+        before { post infos_path }
+        specify { response.should redirect_to(signin_path) }
+      end
+
+      describe "submitting to the destroy action" do
+        before { delete info_path(FactoryGirl.create(:info)) }
+        specify { response.should redirect_to(signin_path) }
       end
     end
   end

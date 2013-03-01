@@ -6,12 +6,20 @@ describe "User pages" do
 
   describe "profile page" do
     let(:user) { FactoryGirl.create(:user) }
+    let!(:i1) { FactoryGirl.create(:info, user: user, content: "Foo") }
+    let!(:i2) { FactoryGirl.create(:info, user: user, content: "Bar") }
+
     before do
       sign_in user
       visit user_path(user)
     end
 
     it { should have_selector('h1',    text: user.name) }
+
+    describe "infos" do
+      it { should have_content(i1.content) }
+      it { should have_content(i2.content) }
+    end
   end
 
   describe "signup page" do
@@ -76,7 +84,13 @@ describe "User pages" do
     end
 
     describe "with invalid information" do
-      before { click_button "Save changes" }
+      let(:new_name)  { "" }
+      let(:new_email) { "" }
+      before do
+        fill_in "Name",                  with: new_name
+        fill_in "Email",                 with: new_email
+        click_button "Save changes"
+      end
 
       it { should have_content('error') }
     end
@@ -87,8 +101,6 @@ describe "User pages" do
       before do
         fill_in "Name",                  with: new_name
         fill_in "Email",                 with: new_email
-        fill_in "Password",              with: user.password
-        fill_in "Password confirmation", with: user.password
         click_button "Save changes"
       end
 

@@ -1,0 +1,10 @@
+<li>
+  <%= link_to info.content, "http://" << info.content << '/' %>
+  <% if current_user?(info.user) %>
+    <%= link_to "delete", info, method: :delete,
+                data: { confirm: "You sure?" },
+                title: info.content,
+                "data-position-to" => "window"
+    %>
+  <% end %>
+</li>
