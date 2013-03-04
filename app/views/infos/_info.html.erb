@@ -1,5 +1,11 @@
 <li>
-  <%= link_to info.content, "http://" << info.content << '/' %>
+  <% if info.info_type && (
+          info.info_type == "Website" ||
+          info.info_type == 'Social account' )  %>
+    <%= link_to info.content, "http://" << info.content << '/' %>
+  <% else %>
+    <%= link_to info.content, info.content %>
+  <% end %>
   <% if current_user?(info.user) %>
     <%= link_to "delete", info, method: :delete,
                 data: { confirm: "You sure?" },

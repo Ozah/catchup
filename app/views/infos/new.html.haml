@@ -1,11 +1,13 @@
 - content_for :heading do
   %div{"data-role" => "header", "data-theme" => "a"}
     = link_to "Back", start_url, "class" => "ui-btn-left", "data-role" => "button"
-    %h1 New link
+    %h1 New info
 
 = form_for @info,  html: { :'data-ajax' => 'false'} do |f|
   = render 'shared/error_messages', object: f.object
   %fieldset
     %div{"data-role" => "fieldcontain"}
-      = f.text_field :content, placeholder: "Info"
+      = f.select :info_type,  [ 'email', 'Website', 'Social account', 'Phone number', 'Address', 'Other' ], :prompt => 'Type'
+    %div{"data-role" => "fieldcontain"}
+      = f.text_area :content, placeholder: "Info"
     = f.submit "Add"

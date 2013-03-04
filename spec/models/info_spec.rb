@@ -1,14 +1,28 @@
+# == Schema Information
+#
+# Table name: infos
+#
+#  id         :integer          not null, primary key
+#  content    :string(255)
+#  user_id    :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  type       :string(255)
+#
+
 require 'spec_helper'
 
 describe Info do
   let(:user) { FactoryGirl.create(:user) }
   before do
-    @info = user.infos.build(content: "www.soundcloud.com/Loremipsum")
+    @info = user.infos.build(content: "www.soundcloud.com/Loremipsum",
+                              type: "soundcloud")
   end
 
   subject { @info }
 
   it { should respond_to(:content) }
+  it { should respond_to(:info_type) }
   it { should respond_to(:user_id) }
   it { should respond_to(:user) }
   its(:user) { should == user }
