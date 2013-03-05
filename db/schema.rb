@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130304120542) do
+ActiveRecord::Schema.define(:version => 20130305105627) do
+
+  create_table "handshakes", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "meeting_id"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "validated",  :default => false
+  end
+
+  add_index "handshakes", ["meeting_id"], :name => "index_handshakes_on_meeting_id"
+  add_index "handshakes", ["user_id"], :name => "index_handshakes_on_user_id"
 
   create_table "infos", :force => true do |t|
     t.string   "content"
@@ -22,6 +33,21 @@ ActiveRecord::Schema.define(:version => 20130304120542) do
   end
 
   add_index "infos", ["user_id"], :name => "index_infos_on_user_id"
+
+  create_table "meetings", :force => true do |t|
+    t.decimal  "latitude"
+    t.decimal  "longitude"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "notes", :force => true do |t|
+    t.string   "content"
+    t.integer  "user_id"
+    t.integer  "meeting_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"

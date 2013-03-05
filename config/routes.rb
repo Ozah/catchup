@@ -1,5 +1,7 @@
 Catchup::Application.routes.draw do
-  resources :users
+  resources :users do
+    resources :meetings
+  end
   resources :sessions, only: [:new, :create, :destroy]
   resources :infos,    only: [:new, :create, :destroy]
 

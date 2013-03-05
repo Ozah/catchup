@@ -14,4 +14,10 @@ FactoryGirl.define do
     content "soundcloud.com/Loremipsum"
     user
   end
+
+  factory :meeting do
+    latitude  100.0
+    longitude 100.0
+  end
+
 end

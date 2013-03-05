@@ -31,6 +31,8 @@ describe User do
   it { should respond_to(:admin) }
   it { should respond_to(:authenticate) }
   it { should respond_to(:infos) }
+  it { should respond_to(:handshakes) }
+  it { should respond_to(:meetings) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -175,5 +177,27 @@ describe User do
         Info.find_by_id(info.id).should be_nil
       end
     end
+  end
+
+  describe "meetings associations" do
+    let!(:meeting) { FactoryGirl.create(:meeting) }
+    before do
+      @user.save
+      meeting.handshakes.create!(user_id: @user.id)
+    end
+
+    its(:meetings) { should include(meeting) }
+  end
+
+  describe "users of the same meeting" do
+    let!(:meeting) { FactoryGirl.create(:meeting) }
+    let!(:user2) { FactoryGirl.create(:user) }
+    before do
+      @user.save
+      meeting.handshakes.create!(user_id: @user.id)
+      meeting.handshakes.create!(user_id: user2.id)
+    end
+
+    specify { @user.meetings[0].users.should include(user2) }
   end
 end
