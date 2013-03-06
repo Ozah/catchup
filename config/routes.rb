@@ -1,6 +1,8 @@
 Catchup::Application.routes.draw do
   resources :users do
     resources :meetings
+    match '/show_list', to: "meetings#show_list"
+    match '/show_map',  to: "meetings#show_map"
   end
   resources :sessions, only: [:new, :create, :destroy]
   resources :infos,    only: [:new, :create, :destroy]
@@ -9,14 +11,14 @@ Catchup::Application.routes.draw do
   # first created -> highest priority.
   root :to => 'static_pages#start'
 
-  match '/signup',  to: 'users#new'
-  match '/signin',  to: 'sessions#new'
-  match '/signout', to: 'sessions#destroy', via: :delete
+  match '/signup',    to: 'users#new'
+  match '/signin',    to: 'sessions#new'
+  match '/signout',   to: 'sessions#destroy', via: :delete
 
-  match '/start', to: "static_pages#start"
-  match '/new', to: "static_pages#new_catchup"
-  match '/contacts', to: "users#show_contacts"
-  match '/help', to: "static_pages#help"
+  match '/start',     to: "static_pages#start"
+  match '/new',       to: "static_pages#new_catchup"
+  match '/contacts',  to: "users#show_contacts"
+  match '/help',      to: "static_pages#help"
 
 
 

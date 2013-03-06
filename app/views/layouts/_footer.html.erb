@@ -1,0 +1,32 @@
+<%
+   profile_class = contacts_class = catchup_class = list_class = info_class = ''
+   active = "ui-btn-active ui-state-persist"
+   case true
+      when footer_tab == 'profile'  then profile_class  = active
+      when footer_tab == 'contacts' then contacts_class = active
+      when footer_tab == 'catchup'  then catchup_class  = active
+      when footer_tab == 'list'     then list_class     = active
+      when footer_tab == 'info'     then info_class     = active
+   end
+%>
+<div data-role="footer" data-id="footer" data-position="fixed">
+  <div data-role="navbar">
+    <ul>
+      <li><%= link_to "Profile", start_url,"data-icon" => "home",
+                      "class" => profile_class %>
+      </li>
+      <li><%= link_to "Contacts", contacts_path,"data-icon" => "star",
+                      "class" => contacts_class %>
+      </li>
+      <li><%= link_to "Catchup", new_user_meeting_path(current_user),"data-icon" => "add",
+                      "class" => catchup_class %>
+      </li>
+      <li><%= link_to "History", user_show_map_path(current_user),"data-icon" => "grid",
+                      "class" => list_class %>
+      </li>
+      <li><%= link_to "Info", help_path,"data-icon" => "info",
+                      "class" => info_class %>
+      </li>
+    </ul>
+  </div>
+</div>

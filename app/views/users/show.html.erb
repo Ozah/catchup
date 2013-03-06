@@ -1,8 +1,13 @@
 <% content_for :heading do %>
   <div data-theme="a" data-role="header">
-    <a data-role="button" data-rel="back" class="ui-btn-left" data-icon="back">Back</a>
-    <%= link_to "Sign out", signout_path, method: "delete",
-                "data-role" => "button", "class" => "ui-btn-right" %>
+    <% if current_user?(@user) %>
+      <%= link_to "Sign out", signout_path, method: "delete",
+                  "data-role" => "button", "class" => "ui-btn-right" %>
+    <% else %>
+      <%= link_to "Back", "#", "data-rel" => "back", "data-icon" => "back",
+                "data-role" => "button", "class" => "ui-btn-left" %>
+    <% end %>
+
     <h1>
       <%= @user.name %>
     </h1>
@@ -12,13 +17,15 @@
 <div data-role="content">
   <%= gravatar_for @user, size: 80 %>
   <%= @user.name %>
-  <%= link_to "Edit profile", edit_user_path(current_user),
-              "data-role" => "button",
-              "data-inline" => "true",
-              "data-icon" => "gear",
-              "data-iconpos" => "notext",
-              "style" => "float: right",
-              "data-theme" => "a" %>
+  <% if current_user?(@user) %>
+    <%= link_to "Edit profile", edit_user_path(current_user),
+                "data-role" => "button",
+                "data-inline" => "true",
+                "data-icon" => "gear",
+                "data-iconpos" => "notext",
+                "style" => "float: right",
+                "data-theme" => "a" %>
+  <% end %>
 
 </div>
 
@@ -29,11 +36,18 @@
       <%= render @infos %>
     </ul>
   <% end %>
-
-  <%= link_to "Add link", new_info_path,
-              "data-role" => "button",
-              "data-inline" => "true",
-              "data-icon" => "add",
-              "data-iconpos" => "notext",
-              "data-theme" => "a" %>
+  <% if current_user?(@user) %>
+    <%= link_to "Add link", new_info_path,
+                "data-role" => "button",
+                "data-inline" => "true",
+                "data-icon" => "add",
+                "data-iconpos" => "notext",
+                "data-theme" => "a" %>
+  <% end %>
 </div>
+
+<% if current_user?(@user) %>
+  <%= render :partial => 'layouts/footer', :locals => { :footer_tab => 'profile' } %>
+<% else %>
+  <%= render :partial => 'layouts/footer', :locals => {:footer_tab => "contacts"} %>
+<% end %>

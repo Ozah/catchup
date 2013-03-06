@@ -1,8 +1,5 @@
 <% content_for :heading do %>
   <div data-theme="a" data-role="header">
-    <a data-role="button" data-rel="back" class="ui-btn-left" data-icon="back">Back</a>
-    <%= link_to "Sign out", signout_path, method: "delete",
-                "data-role" => "button", "class" => "ui-btn-right" %>
     <h1>
       Contacts
     </h1>
@@ -20,5 +17,6 @@
 
     </ul>
   <% end %>
-
 </div>
+
+<%= render :partial => 'layouts/footer', :locals => {:footer_tab => "contacts"} %>

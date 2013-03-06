@@ -26,20 +26,6 @@
       <%= yield %>
       <%= debug(params) if Rails.env.development? %>
     </div>
-
-    <div data-role="footer" data-id="main" position="fixed">
-      <div data-role="navbar">
-        <ul>
-          <li><%= link_to "Profile", start_url,"data-icon" => "home" %></li>
-          <li><%= link_to "Contacts", '/contacts',"data-icon" => "star" %></li>
-          <li><%= link_to "Catchup", '/new',"data-icon" => "add" %></li>
-          <li><a href="#help"data-icon="grid" >History</a></li>
-          <li><a href="#help"data-icon="info" >Help</a></li>
-        </ul>
-      </div>
-    </div>
-
-
   </div>
 </body>
 </html>

@@ -1,8 +1,7 @@
 <% content_for :heading do %>
   <div data-theme="a" data-role="header">
-    <a data-role="button" href=<%= user_path %> class="ui-btn-left">
-    Back
-    </a>
+    <%= link_to "Back", "#", "data-rel" => "back", "data-icon" => "back",
+                "data-role" => "button", "class" => "ui-btn-left" %>
     <h1>
       Edit user
     </h1>
@@ -20,8 +19,12 @@
     </div>
     <%= f.submit "Save changes" %>
   </fieldset>
-  <div>
+  <div data-role="content">
     <%= gravatar_for @user %>
+  </div>
+  <div data-role="content">
     <a href="http://gravatar.com/emails">change</a>
   </div>
 <% end %>
+
+<%= render :partial => 'layouts/footer', :locals => { :footer_tab => 'profile' } %>

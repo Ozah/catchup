@@ -1,0 +1,10 @@
+<% content_for :heading do %>
+  <div data-theme="a" data-role="header">
+    <%= link_to "Map", user_show_map_path(current_user), "data-icon" => "grid",
+                "data-role" => "button", "class" => "ui-btn-right" %>
+    <h1>List</h1>
+  </div>
+<% end %>
+LIST
+
+<%= render :partial => 'layouts/footer', :locals => {:footer_tab => "list"} %>

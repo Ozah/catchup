@@ -6,8 +6,8 @@ describe "User pages" do
 
   describe "profile page" do
     let(:user) { FactoryGirl.create(:user) }
-    let!(:i1) { FactoryGirl.create(:info, user: user, content: "Foo") }
-    let!(:i2) { FactoryGirl.create(:info, user: user, content: "Bar") }
+    let!(:info1) { FactoryGirl.create(:info, user: user, content: "Foo") }
+    let!(:info2) { FactoryGirl.create(:info, user: user, content: "Bar") }
 
     before do
       sign_in user
@@ -15,12 +15,41 @@ describe "User pages" do
     end
 
     it { should have_selector('h1',    text: user.name) }
+    it { should have_link('Sign out') }
+    it { should have_link("Edit profile", href: edit_user_path(user)) }
+    it { should have_link("Add link", href: new_info_path) }
 
     describe "infos" do
-      it { should have_content(i1.content) }
-      it { should have_content(i2.content) }
+      it { should have_content(info1.content) }
+      it { should have_content(info2.content) }
+      it { should have_link("delete", href: info_path(info1.id)) }
+      it { should have_link("delete", href: info_path(info2.id)) }
     end
+
+    describe "profile page of another user" do
+      let(:user2) { FactoryGirl.create(:user) }
+      let!(:info3) { FactoryGirl.create(:info, user: user2, content: "Foo") }
+      let!(:info4) { FactoryGirl.create(:info, user: user2, content: "Bar") }
+
+      before do
+        visit user_path(user2)
+      end
+
+      it { should have_selector('h1',    text: user2.name) }
+      it { should have_link('Sign out') }
+      it { should_not have_link("Edit profile") }
+      it { should_not have_link("Add link") }
+
+      describe "infos" do
+        it { should have_content(info3.content) }
+        it { should have_content(info4.content) }
+        it { should_not have_link("delete", href: info_path(info1.id)) }
+        it { should_not have_link("delete", href: info_path(info2.id)) }
+      end
+    end
+
   end
+
 
   describe "signup page" do
     before { visit signup_path }
@@ -110,6 +139,24 @@ describe "User pages" do
       specify { user.reload.name.should  == new_name }
       specify { user.reload.email.should == new_email }
     end
+  end
+
+  describe "contacts page" do
+    let!(:user) { FactoryGirl.create(:user) }
+    let!(:user2) { FactoryGirl.create(:user) }
+    let!(:user3) { FactoryGirl.create(:user) }
+    before do
+      user.add_contact!(user2)
+      user.add_contact!(user3)
+      sign_in user
+      visit contacts_path
+    end
+
+    it { should have_selector('h1', text: "Contacts") }
+    it { should have_link(user2.name, href: user_path(user2)) }
+    it { should have_link(user3.name, href: user_path(user3)) }
+    it { should have_link('Sign out', href: signout_path) }
+
   end
 
 end
