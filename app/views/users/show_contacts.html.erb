@@ -1,0 +1,24 @@
+<% content_for :heading do %>
+  <div data-theme="a" data-role="header">
+    <a data-role="button" data-rel="back" class="ui-btn-left" data-icon="back">Back</a>
+    <%= link_to "Sign out", signout_path, method: "delete",
+                "data-role" => "button", "class" => "ui-btn-right" %>
+    <h1>
+      Contacts
+    </h1>
+  </div>
+<% end %>
+
+<div data-role="content">
+  <% if @contacts.any? %>
+    <ul data-role="listview" data-inset="true" data-split-icon="delete" data-split-theme="a">
+      <% @contacts.each do |contact| %>
+        <li>
+          <%= link_to contact.name, user_path(contact) %>
+        </li>
+      <% end %>
+
+    </ul>
+  <% end %>
+
+</div>

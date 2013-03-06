@@ -13,4 +13,9 @@ rails generate model Meeting
 \f1 \cf0 \cb3 latitude:decimal longitude:decimal\
 
 \f0 \cf2 \cb3 rails generate model Note content:string user_id:integer meeting_id:integer\
-rails generate model Handshake user_id:integer meeting_id:integer}
+rails generate model Handshake user_id:integer meeting_id:integer\
+\
+rails generate controller Meetings\
+\
+rails generate model Relationship user_id:integer contact_id:integer\
+rails generate migration add_index_to_relationships_contact_id}

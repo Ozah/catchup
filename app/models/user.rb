@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation
   has_secure_password
   has_many :infos, dependent: :destroy
+  has_many :relationships
+  has_many :contacts, through: :relationships
   has_many :handshakes
   has_many :meetings, through: :handshakes
 
@@ -33,6 +35,14 @@ class User < ActiveRecord::Base
                        length: { within: 6..40 },
                        unless: :already_has_password?
   #validates :password_confirmation, presence: true
+
+  def add_contact!(other_user)
+    relationships.create!(contact_id: other_user.id)
+  end
+
+  def is_contact?(other_user)
+    relationships.find_by_contact_id(other_user.id)
+  end
 
   private
 

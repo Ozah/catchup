@@ -51,6 +51,10 @@ class UsersController < ApplicationController
 
   end
 
+  def show_contacts
+    @contacts = current_user.contacts
+  end
+
   private
 
     def correct_user

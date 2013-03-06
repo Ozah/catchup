@@ -31,8 +31,15 @@ describe User do
   it { should respond_to(:admin) }
   it { should respond_to(:authenticate) }
   it { should respond_to(:infos) }
+
+  it { should respond_to(:relationships) }
+  it { should respond_to(:contacts) }
+  it { should respond_to(:add_contact!) }
+  it { should respond_to(:is_contact?) }
+
   it { should respond_to(:handshakes) }
   it { should respond_to(:meetings) }
+
 
   it { should be_valid }
   it { should_not be_admin }
@@ -177,6 +184,17 @@ describe User do
         Info.find_by_id(info.id).should be_nil
       end
     end
+  end
+
+  describe "add contact" do
+    let!(:other_user) { FactoryGirl.create(:user) }
+    before do
+      @user.save
+      @user.add_contact!(other_user)
+    end
+
+    it { should be_is_contact(other_user)}
+    its(:contacts) { should include(other_user)}
   end
 
   describe "meetings associations" do

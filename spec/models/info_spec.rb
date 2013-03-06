@@ -16,7 +16,7 @@ describe Info do
   let(:user) { FactoryGirl.create(:user) }
   before do
     @info = user.infos.build(content: "www.soundcloud.com/Loremipsum",
-                              type: "soundcloud")
+                              info_type: "soundcloud")
   end
 
   subject { @info }

@@ -1,0 +1,17 @@
+- content_for :heading do
+  %div{"data-role" => "header", "data-theme" => "a"}
+    = link_to "Back", start_url, "class" => "ui-btn-left", "data-role" => "button"
+    %h1 Catch up
+
+%div
+  %p{:style => "text-align: center; "}
+    %span{:style => "font-size: xx-large; font-family: 'comic sans ms', sans-serif; color: rgb(51, 102, 255); "}
+      %b
+        New Catchup
+%div
+  Arround me:
+%div
+  Pending:
+%div
+  = link_to "Use contact list", "#", "id" => "",  "data-role" => "button", "data-theme" => "b"
+  = link_to "Enter email", "#", "id" => "",  "data-role" => "button", "data-theme" => "b"

@@ -14,7 +14,8 @@ Catchup::Application.routes.draw do
   match '/signout', to: 'sessions#destroy', via: :delete
 
   match '/start', to: "static_pages#start"
-
+  match '/new', to: "static_pages#new_catchup"
+  match '/contacts', to: "users#show_contacts"
   match '/help', to: "static_pages#help"
 
 
