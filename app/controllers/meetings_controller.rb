@@ -18,11 +18,22 @@ class MeetingsController < ApplicationController
   end
 
   def show_list
-
+    @user_list = nil
+    current_user.meetings.each do |meeting|
+      if @user_list == nil
+        @user_list = meeting.users.where("user_id != ?", current_user.id)
+      else
+        @user_list << meeting.users.where("user_id != ?", current_user.id)
+      end
+    end
   end
 
   def show_map
-
+    markers = []
+    current_user.meetings.each do |meeting|
+      markers << {lat: meeting.latitude, lng: meeting.longitude, description: "woohoo"}
+    end
+    @markers_json = markers.to_json
   end
 
 end

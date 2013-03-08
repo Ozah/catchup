@@ -1,10 +1,6 @@
 <% content_for :heading do %>
-  <div data-theme="a" data-role="header">
-    <% link_to "Back", start_url, "class" => "ui-btn-left", "data-role" => "button" %>
-    <h1>
-      Sign up
-    </h1>
-  </div>
+  <% link_to "Back", start_url, "class" => "ui-btn-left", "data-role" => "button" %>
+   <h1>Sign up</h1>
 <% end %>
 
 <%= form_for @user,  html: { :'data-ajax' => 'false'} do |f| %>

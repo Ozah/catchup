@@ -36,7 +36,6 @@ describe "User pages" do
       end
 
       it { should have_selector('h1',    text: user2.name) }
-      it { should have_link('Sign out') }
       it { should_not have_link("Edit profile") }
       it { should_not have_link("Add link") }
 
@@ -155,7 +154,6 @@ describe "User pages" do
     it { should have_selector('h1', text: "Contacts") }
     it { should have_link(user2.name, href: user_path(user2)) }
     it { should have_link(user3.name, href: user_path(user3)) }
-    it { should have_link('Sign out', href: signout_path) }
 
   end
 

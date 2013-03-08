@@ -1,10 +1,17 @@
 <% content_for :heading do %>
-  <div data-theme="a" data-role="header">
-    <%= link_to "List", user_show_list_path(current_user), "data-icon" => "grid",
-                "data-role" => "button", "class" => "ui-btn-right" %>
-    <h1>Map </h1>
-  </div>
+  <%= link_to "List", user_show_list_path(current_user), "data-icon" => "grid",
+              "data-role" => "button", "class" => "ui-btn-right" %>
+  <h1>Map </h1>
 <% end %>
-MAP
+
+<div data-role="content">
+  <img src="https://maps.googleapis.com/maps/api/staticmap?center=Madison, WI&amp;zoom=14&amp;size=288x200&amp;markers=Madison, WI&amp;sensor=false"
+       width="288" height="200">
+</div>
+
+<%= gmaps4rails(@markers_json) %>
+
+<!--google maps stuff:-->
+<%= yield :scripts %>
 
 <%= render :partial => 'layouts/footer', :locals => {:footer_tab => "list"} %>

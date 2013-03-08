@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130305162456) do
+ActiveRecord::Schema.define(:version => 20130307151902) do
 
   create_table "handshakes", :force => true do |t|
     t.integer  "user_id"
@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(:version => 20130305162456) do
   add_index "infos", ["user_id"], :name => "index_infos_on_user_id"
 
   create_table "meetings", :force => true do |t|
-    t.decimal  "latitude"
-    t.decimal  "longitude"
+    t.float    "latitude"
+    t.float    "longitude"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

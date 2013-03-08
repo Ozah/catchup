@@ -12,13 +12,11 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require gmaps4rails/gmaps4rails.base
+//= require gmaps4rails/gmaps4rails.googlemaps
 //= require_tree .
 
-$(document).bind( "mobileinit", function() {
-    $.mobile.touchOverflowEnabled = true;
-//    doesn't work..
-    $.mobile.defaultPageTransition = "turn";
-});
+
 
 //prevents scrolling of the page
 //$(document).bind("touchmove",function(event){

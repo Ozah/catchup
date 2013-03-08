@@ -3,8 +3,8 @@
 # Table name: meetings
 #
 #  id         :integer          not null, primary key
-#  latitude   :decimal(, )
-#  longitude  :decimal(, )
+#  latitude   :float
+#  longitude  :float
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -14,4 +14,5 @@ class Meeting < ActiveRecord::Base
 
   has_many :handshakes
   has_many :users, through: :handshakes
+
 end

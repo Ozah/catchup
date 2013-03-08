@@ -1,10 +1,20 @@
 <% content_for :heading do %>
-  <div data-theme="a" data-role="header">
-    <%= link_to "Map", user_show_map_path(current_user), "data-icon" => "grid",
-                "data-role" => "button", "class" => "ui-btn-right" %>
-    <h1>List</h1>
-  </div>
+  <%= link_to "Map", user_show_map_path(current_user), "data-icon" => "grid",
+              "data-role" => "button", "class" => "ui-btn-right", "data-ajax" => "false" %>
+  <h1>List</h1>
 <% end %>
-LIST
+RENCENT MEETINGS:
+<div data-role="content">
+  <% if @user_list.any? %>
+    <ul data-role="listview" data-inset="true" >
+      <% @user_list.each do |contact| %>
+        <li>
+          <%= link_to contact.name, user_path(contact) %>
+        </li>
+      <% end %>
+
+    </ul>
+  <% end %>
+</div>
 
 <%= render :partial => 'layouts/footer', :locals => {:footer_tab => "list"} %>

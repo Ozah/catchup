@@ -22,7 +22,7 @@
                       "class" => catchup_class %>
       </li>
       <li><%= link_to "History", user_show_map_path(current_user),"data-icon" => "grid",
-                      "class" => list_class %>
+                      "class" => list_class, "rel" => "internal" %>
       </li>
       <li><%= link_to "Info", help_path,"data-icon" => "info",
                       "class" => info_class %>
