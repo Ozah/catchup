@@ -20,4 +20,10 @@ rails generate controller Meetings\
 rails generate model Relationship user_id:integer contact_id:integer\
 rails generate migration add_index_to_relationships_contact_id\
 \
-}
+meeting1 = Meeting.create(latitude: 48.8494, longitude: 2.44187)\
+meeting1.handshakes.create(user_id: 1)\
+meeting1.handshakes.create(user_id: 2)\
+\
+meeting2 = Meeting.create(latitude: 48.8483059, longitude: 2.4368947)\
+meeting2.handshakes.create(user_id: 1)\
+meeting2.handshakes.create(user_id: 3)}

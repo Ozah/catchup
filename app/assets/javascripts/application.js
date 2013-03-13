@@ -12,13 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require gmaps4rails/gmaps4rails.base
-//= require gmaps4rails/gmaps4rails.googlemaps
+//= require ui_map/min/jquery.ui.map.full.min
+//= require ui_map/min/jquery.ui.map.min
+//= require ui_map/min/jquery.ui.map.overlays.min
+//= require ui_map/min/jquery.ui.map.services.min
+//= require ui_map/jquery.ui.map.extensions
 //= require_tree .
-
-
-
-//prevents scrolling of the page
-//$(document).bind("touchmove",function(event){
-//    event.preventDefault();
-//});

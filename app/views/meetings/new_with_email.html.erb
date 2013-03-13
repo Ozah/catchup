@@ -1,0 +1,16 @@
+<% content_for :heading do %>
+  <%= link_to "Back", "#", "data-rel" => "back", "data-icon" => "back",
+              "data-role" => "button", "class" => "ui-btn-left" %>
+  <h1>Enter email</h1>
+<% end %>
+
+<%= form_tag user_create_with_email_path(current_user), 'data-ajax' => 'false' do %>
+  <fieldset>
+    <div data-role="fieldcontain">
+      <%= email_field_tag :email, nil, placeholder: "Email" %>
+    </div>
+    <%= submit_tag "Catchup" %>
+  </fieldset>
+<% end %>
+
+<%= render :partial => 'layouts/footer', :locals => {:footer_tab => "catchup"} %>

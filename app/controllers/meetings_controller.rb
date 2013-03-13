@@ -9,23 +9,36 @@ class MeetingsController < ApplicationController
 
   end
 
-  def new_with_contacts
+  def new_with_contact
+    @contacts = current_user.contacts
+  end
 
+  def create_with_email
+    user = User.find_by_email(params[:email].downcase)
+    if user
+      # TODO
+      flash[:success] = "New catchup!"
+      redirect_to user_show_list_path(current_user)
+    else
+      flash.now[:error] = "This user doesn't exist"
+      render 'new_with_email'
+    end
   end
 
   def create
-
+    print ("id=#{params[:user_id]} long=#{params[:long]} lat=#{params[:lat]}")
+    redirect_to new_user_meeting_path(current_user)
   end
 
   def show_list
-    @user_list = nil
-    current_user.meetings.each do |meeting|
-      if @user_list == nil
-        @user_list = meeting.users.where("user_id != ?", current_user.id)
-      else
-        @user_list << meeting.users.where("user_id != ?", current_user.id)
+    #really ugly but works...
+    @user_list = []
+    if current_user.meetings.any?
+      current_user.meetings.each do |meeting|
+        @user_list += meeting.users.where("user_id != ?", current_user.id)
       end
     end
+
   end
 
   def show_map
@@ -33,7 +46,7 @@ class MeetingsController < ApplicationController
     current_user.meetings.each do |meeting|
       markers << {lat: meeting.latitude, lng: meeting.longitude, description: "woohoo"}
     end
-    @markers_json = markers.to_json
+    gon.markers = markers
   end
 
 end

@@ -11,8 +11,8 @@ gem 'bcrypt-ruby', '3.0.1'
 gem 'pg'
 gem 'haml'
 gem 'faker', '1.0.1'
-gem "jquery_mobile-rails"
-gem 'gmaps4rails'
+# to pass data from controller to JS:
+gem 'gon'
 
 group :development, :test do
   gem 'rspec-rails'
@@ -21,6 +21,8 @@ end
 group :development do
   #annotates the models
   gem 'annotate', '2.5.0'
+  gem "binding_of_caller"
+  gem "better_errors"
 end
 
 # Gems used only for assets and not required

@@ -1,17 +1,83 @@
 <% content_for :heading do %>
+  <button onclick="refresh()" class="ui-btn-left" data-icon= "refresh">Refresh</button>
   <%= link_to "List", user_show_list_path(current_user), "data-icon" => "grid",
               "data-role" => "button", "class" => "ui-btn-right" %>
   <h1>Map </h1>
 <% end %>
 
+<p id="info"></p>
+
+
 <div data-role="content">
-  <img src="https://maps.googleapis.com/maps/api/staticmap?center=Madison, WI&amp;zoom=14&amp;size=288x200&amp;markers=Madison, WI&amp;sensor=false"
-       width="288" height="200">
+  <div id="map_canvas" style="width:100%;height:250px"></div>
 </div>
 
-<%= gmaps4rails(@markers_json) %>
+<script type="text/javascript">
+  function refresh() {
+    //alert("refresh");
+    $(function () {
+      $('#map_canvas').gmap('refresh');
+      $('#map_canvas').gmap({'center': '59.3426606750, 18.0736160278'});
+    });
+  }
 
-<!--google maps stuff:-->
-<%= yield :scripts %>
+  $(function () {
+    $('#map_canvas').gmap().bind('init', function(evt, map) {
+      // geolocation
+      if (navigator.geolocation)
+      {
+        $('#map_canvas').gmap('getCurrentPosition', function(position, status) {
+          if ( status === 'OK' ) 
+          {
+            var clientPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            $('#map_canvas').gmap('addMarker', {
+              'position': clientPosition, 
+              'bounds': true,
+              'icon:': "blue" 
+            });
+            $('#map_canvas').gmap('addShape', 'Circle', { 
+              'strokeWeight': 0, 
+              'fillColor': "#008595", 
+              'fillOpacity': 0.25, 
+              'center': clientPosition, 
+              'radius': 15, 
+              'clickable': false 
+            }); 
+          }
+          else {
+            switch(status.code)
+            {
+              case status.PERMISSION_DENIED:
+                x.innerHTML = "User denied the request for Geolocation."
+                break;
+              case status.POSITION_UNAVAILABLE:
+                x.innerHTML = "Location information is unavailable."
+                break;
+              case status.TIMEOUT:
+                x.innerHTML = "The request to get user location timed out."
+                break;
+              case status.UNKNOWN_ERROR:
+                x.innerHTML = "An unknown error occurred."
+                break;
+            }  
+          }
+        }); 
+      }//if (navigator.geolocation)
+      else
+      {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+      }  
+
+      // contacts Markers:
+      for (var i = 0; i < gon.markers.length; i++) 
+      {
+        latlon = new google.maps.LatLng(gon.markers[i].lat, gon.markers[i].lng)
+        $('#map_canvas').gmap('addMarker', {'position': latlon, 'bounds': true});
+      } 
+    });
+  });
+
+</script>
+
 
 <%= render :partial => 'layouts/footer', :locals => {:footer_tab => "list"} %>

@@ -18,8 +18,8 @@
 </div>
 
 <div>
-  <%= link_to "Use contact list", "#", "id" => "",  "data-role" => "button", "data-theme" => "b" %>
-  <%= link_to "Enter email", "#", "id" => "",  "data-role" => "button", "data-theme" => "b" %>
+  <%= link_to "Use contact list", user_new_with_contact_path(current_user), "id" => "",  "data-role" => "button", "data-theme" => "b" %>
+  <%= link_to "Enter email", user_new_with_email_path(current_user), "id" => "",  "data-role" => "button", "data-theme" => "b" %>
 </div>
 
 <%= render :partial => 'layouts/footer', :locals => {:footer_tab => "catchup"} %>

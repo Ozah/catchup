@@ -1,0 +1,21 @@
+<div data-role="content">
+  <% if @contacts.any? %>
+    <ul data-role="listview" data-inset="true" data-split-icon="delete" data-split-theme="a">
+      <% @contacts.each do |contact| %>
+        <li>
+          <%= link_to contact.name, user_meetings_path(contact, long: 120, lat: 890), method: :post,
+                      data: { confirm: "Catching up with #{contact.name}?" },
+                      :class => 'meet_contact_link'
+          %>
+        </li>
+      <% end %>
+
+    </ul>
+  <% end %>
+
+  <script>
+    var x=document.getElementById("demo");
+
+
+  </script>
+</div>
