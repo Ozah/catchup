@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require ui_map/min/jquery.ui.map.full.min
 //= require ui_map/min/jquery.ui.map.min
 //= require ui_map/min/jquery.ui.map.overlays.min
 //= require ui_map/min/jquery.ui.map.services.min
