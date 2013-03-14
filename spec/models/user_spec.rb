@@ -10,6 +10,10 @@
 #  password_digest :string(255)
 #  remember_token  :string(255)
 #  admin           :boolean          default(FALSE)
+#  latitude        :float
+#  longitude       :float
+#  location_time   :datetime
+#  address         :string(255)
 #
 
 require 'spec_helper'

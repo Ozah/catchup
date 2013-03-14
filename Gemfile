@@ -13,6 +13,7 @@ gem 'haml'
 gem 'faker', '1.0.1'
 # to pass data from controller to JS:
 gem 'gon'
+gem 'geocoder'
 
 group :development, :test do
   gem 'rspec-rails'

@@ -10,10 +10,15 @@
 #  password_digest :string(255)
 #  remember_token  :string(255)
 #  admin           :boolean          default(FALSE)
+#  latitude        :float
+#  longitude       :float
+#  location_time   :datetime
+#  address         :string(255)
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation
+  attr_accessible :name, :email, :password, :password_confirmation, 
+                  :latitude, :longitude, :location_time
   has_secure_password
   has_many :infos, dependent: :destroy
   has_many :relationships
