@@ -1,5 +1,5 @@
 <% content_for :heading do %>
-  <%= link_to "Refresh", "#", "onclick" => "getPosition(sendGeoLocPosition)", 
+  <%= link_to "Refresh", "#", "onclick" => "refreshCatchupPage()", 
           "data-icon" => "refresh", "data-role" => "button", "class" => "ui-btn-right" %>
   <h1>Catch up</h1>
 <% end %>
@@ -27,8 +27,11 @@
 </div>
 
 <script type="text/javascript">
+  var refreshCatchupPage = function() {
+    getPosition(sendGeoLocPosition);  
+  }
   var sendGeoLocPosition = function(position) {
-      $.ajax("<%= user_update_location_path(current_user) %>", {
+      $.ajax("<%= user_update_catch_up_page_path(current_user) %>", {
           type: 'POST',
           data: { latitude: position.coords.latitude, 
                   longitude: position.coords.longitude },

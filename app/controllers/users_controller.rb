@@ -56,18 +56,6 @@ class UsersController < ApplicationController
     @contacts = current_user.contacts
   end
 
-  def update_location
-    current_user.update_attributes(longitude:     params[:longitude], 
-                                   latitude:      params[:latitude],
-                                   location_time: Time.now)
-    @arround_me = current_user.nearbys(0.03); 
-    @pending = []
-    @to_confirm = []
-    sign_in current_user
-    respond_to do |format|
-      format.js
-    end
-  end
 
   private
 

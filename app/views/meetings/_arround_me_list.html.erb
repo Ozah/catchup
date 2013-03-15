@@ -1,5 +1,9 @@
 <% contacts.each do |contact| %>
   <li>
-    <%= link_to contact.name, user_path(contact) %>
+    <%= link_to contact.name, 
+				    user_meetings_path(current_user, user_to_meet: contact),
+				    method: :post, 
+				    data: { confirm: "You are catching up with #{contact.name}?" }
+				      %>
   </li>
 <% end %>

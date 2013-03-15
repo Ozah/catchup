@@ -1,0 +1,8 @@
+$("#arround_me_list").empty().append("<%= escape_javascript(render :partial => 'meetings/arround_me_list', :locals => { :contacts => @arround_me }) %>");
+$('#arround_me_list').listview('refresh');
+
+$("#pending_list").empty().append("<%= escape_javascript(render :partial => 'meetings/pending_list', :locals => { :contacts => @pending }) %>");
+$('#pending_list').listview('refresh');
+
+$("#to_confirm_list").empty().append("<%= escape_javascript(render :partial => 'meetings/to_confirm_list', :locals => { :list => @to_confirm }) %>");
+$('#to_confirm_list').listview('refresh');

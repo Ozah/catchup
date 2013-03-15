@@ -1,12 +1,13 @@
 Catchup::Application.routes.draw do
   resources :users do
     resources :meetings
-    match '/show_list', to: "meetings#show_list"
-    match '/show_map',  to: "meetings#show_map"
-    match '/new_with_email', to: "meetings#new_with_email"
-    match '/create_with_email', to: "meetings#create_with_email"
-    match '/new_with_contact', to: "meetings#new_with_contact"
-    match '/update_location', to: "users#update_location"
+    match '/show_list',            to: "meetings#show_list"
+    match '/show_map',             to: "meetings#show_map"
+    match '/new_with_email',       to: "meetings#new_with_email"
+    match '/create_with_email',    to: "meetings#create_with_email"
+    match '/new_with_contact',     to: "meetings#new_with_contact"
+    match '/update_catch_up_page', to: "meetings#update_page"
+    match '/confirm_meeting',      to: "meetings#confirm"
   end
   resources :sessions, only: [:new, :create, :destroy]
   resources :infos,    only: [:new, :create, :destroy]

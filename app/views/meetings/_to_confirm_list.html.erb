@@ -1,5 +1,9 @@
-<% contacts.each do |contact| %>
+<% list.each do |item| %>
   <li>
-    <%= link_to contact.name, user_path(contact) %>
+  	<!-- here I use the first person's name in case of a group catchup -->
+    <%= link_to item[:users][0].name, 
+    				user_confirm_meeting_path(current_user, handshake_id: item[:handshake_id]), 
+				    data: { confirm: "You are you sure?" }
+				     %>
   </li>
 <% end %>
