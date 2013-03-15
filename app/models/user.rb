@@ -20,6 +20,8 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation, 
                   :latitude, :longitude, :location_time
   has_secure_password
+  reverse_geocoded_by :latitude, :longitude
+
   has_many :infos, dependent: :destroy
   has_many :relationships
   has_many :contacts, through: :relationships

@@ -6,6 +6,7 @@ Catchup::Application.routes.draw do
     match '/new_with_email', to: "meetings#new_with_email"
     match '/create_with_email', to: "meetings#create_with_email"
     match '/new_with_contact', to: "meetings#new_with_contact"
+    match '/update_location', to: "users#update_location"
   end
   resources :sessions, only: [:new, :create, :destroy]
   resources :infos,    only: [:new, :create, :destroy]

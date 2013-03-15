@@ -12,6 +12,8 @@
 class Meeting < ActiveRecord::Base
   attr_accessible :latitude, :longitude
 
+  reverse_geocoded_by :latitude, :longitude
+
   has_many :handshakes
   has_many :users, through: :handshakes
 

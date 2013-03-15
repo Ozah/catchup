@@ -12,10 +12,16 @@
   }
 }
 
-#alert-success {
-
-}
+#new_meeting_ctrlgrp {
+  position: absolute;
+  bottom: 60px;
+  left: 10px;
+}​
 
 #alert-error {
   color: #f00;
+}
+
+#alert-success {
+	color: #f00;
 }
