@@ -1,8 +1,5 @@
 <% content_for :heading do %>
-  <% if current_user?(@user) %>
-    <%= link_to "Sign out", signout_path, method: "delete",
-                "data-role" => "button", "class" => "ui-btn-right" %>
-  <% else %>
+  <% unless current_user?(@user) %>
     <%= link_to "Back", "#", "data-rel" => "back", "data-icon" => "back",
               "data-role" => "button", "class" => "ui-btn-left" %>
   <% end %>

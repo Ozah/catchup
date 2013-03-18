@@ -68,7 +68,20 @@ class MeetingsController < ApplicationController
     gon.markers = markers
   end
 
+  def update_position
+    current_user.update_attributes(longitude:     params[:longitude], 
+                                   latitude:      params[:latitude],
+                                   location_time: Time.now)
+    puts("BAM!!! longitude = #{params[:longitude]} latitude = #{params[:latitude]}")
+    render text: "success"
+  end
+
   def update_page
+    puts("THIS IS MAD!!!!!!!!!!")
+    render text: "success"
+  end
+
+  def update_page2
     current_user.update_attributes(longitude:     params[:longitude], 
                                    latitude:      params[:latitude],
                                    location_time: Time.now)

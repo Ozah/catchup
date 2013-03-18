@@ -7,16 +7,10 @@
   <%= render 'shared/error_messages', object: f.object %>
   <fieldset>
     <div data-role="fieldcontain">
-      <%= f.text_field :name, placeholder: "Name" %>
+      <%= f.text_field :name, placeholder: "User name", id: "new_user_name" %>
     </div>
     <div data-role="fieldcontain">
-      <%= f.email_field :email, placeholder: "Email" %>
-    </div>
-    <div data-role="fieldcontain">
-      <%= f.password_field :password, placeholder: "Password" %>
-    </div>
-    <div data-role="fieldcontain">
-      <%= f.password_field :password_confirmation, placeholder: "Password confirmation" %>
+      <%= f.email_field :email, placeholder: "Email (optional)", id: "new_user_email" %>
     </div>
     <%= f.submit "Create my account" %>
   </fieldset>

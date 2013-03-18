@@ -2,8 +2,7 @@ FactoryGirl.define do
   factory :user do
     sequence(:name)  { |n| "Person #{n}" }
     sequence(:email) { |n| "person_#{n}@example.com"}
-    password "foobar"
-    password_confirmation "foobar"
+    sequence(:remember_token)  { |n| "#{n}" }
 
     factory :admin do
       admin true
@@ -12,7 +11,6 @@ FactoryGirl.define do
 
   factory :info do
     content "soundcloud.com/Loremipsum"
-    user
   end
 
   factory :meeting do

@@ -7,7 +7,7 @@ describe "Authentication" do
   describe "signin page" do
     before { visit signin_path }
 
-    it { should have_selector('h1',    text: 'Sign in') }
+    it { should have_selector('h1', text: 'Sign in') }
   end
 
   describe "signin" do
@@ -27,17 +27,13 @@ describe "Authentication" do
 
     describe "with valid information" do
       let(:user) { FactoryGirl.create(:user) }
-      before { sign_in user }
+      before do 
+        sign_in user 
+      end
 
       it { should have_selector('h1', text: user.name) }
       it { should have_link('', href: edit_user_path(user)) }
-      it { should have_link('Sign out', href: signout_path) }
       it { should_not have_link('Sign in', href: signin_path) }
-
-      describe "followed by signout" do
-        before { click_link "Sign out" }
-        it { should have_link('Sign in') }
-      end
     end
   end
 
@@ -77,14 +73,15 @@ describe "Authentication" do
     end
 
     describe "in the Infos controller" do
-
+      
       describe "submitting to the create action" do
         before { post infos_path }
         specify { response.should redirect_to(signin_path) }
       end
 
       describe "submitting to the destroy action" do
-        before { delete info_path(FactoryGirl.create(:info)) }
+        let(:user) { FactoryGirl.create(:user) }
+        before { delete info_path(FactoryGirl.create(:info, user: user)) }
         specify { response.should redirect_to(signin_path) }
       end
     end

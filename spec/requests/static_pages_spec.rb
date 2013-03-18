@@ -7,8 +7,7 @@ describe "StaticPages" do
     before { visit start_path }
 
     it { should have_content('CATCHUP') }
-    it { should have_link('Try catchup as a guest') }
-    it { should have_link('Sign up') }
+    it { should have_link('Try catchup') }
     it { should have_link('Sign in') }
 
     it "should have the right links on the layout" do

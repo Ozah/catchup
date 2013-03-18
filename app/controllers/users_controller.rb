@@ -23,6 +23,7 @@ class UsersController < ApplicationController
   #POST /users - users_path - creates a new user
   def create
     @user = User.new(params[:user])
+    @user.create_remember_token
     if @user.save
       sign_in @user
       flash[:success] = "Welcome to catchup!"

@@ -17,9 +17,9 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation, 
+  attr_accessible :name, :email, 
                   :latitude, :longitude, :location_time
-  has_secure_password
+  #has_secure_password
   reverse_geocoded_by :latitude, :longitude
 
   has_many :infos, dependent: :destroy
@@ -28,19 +28,26 @@ class User < ActiveRecord::Base
   has_many :handshakes
   has_many :meetings, through: :handshakes
 
+  
   # Ensuring email uniqueness by downcasing the email attribute.
   before_save { email.downcase! }
-  before_save :create_remember_token
+
+  #before_save :create_remember_token
 
   validates :name,  presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email, presence: true,
-                    format: { with: VALID_EMAIL_REGEX },
-                    uniqueness: { case_sensitive: false }
+  validates :email, format: { with: VALID_EMAIL_REGEX },
+                    uniqueness: { case_sensitive: false },
+                    :allow_blank => true
+  validates :remember_token, presence: true, uniqueness: true
+
+=begin  
   validates :password, presence: true,
                        confirmation: true,
                        length: { within: 6..40 },
                        unless: :already_has_password?
+=end
+
   #validates :password_confirmation, presence: true
 
   def add_contact!(other_user)
@@ -51,13 +58,36 @@ class User < ActiveRecord::Base
     relationships.find_by_contact_id(other_user.id)
   end
 
-  private
-
-    def create_remember_token
-      self.remember_token = SecureRandom.urlsafe_base64
+  def create_remember_token
+    done = false
+    until done do 
+      token = SecureRandom.urlsafe_base64
+      #makes sure the remember_token is unique
+      unless User.find_by_remember_token(token)
+        self.remember_token = token
+        done = true
+      end
     end
+  end
+
+  def authenticate(password)
+    self.password_digest == password
+  end
+
+  def set_password(password)
+    self.password_digest = password
+  end
+
+  def remove_password
+    self.password_digest == ""
+  end
+
+   
+=begin
+  private 
 
     def already_has_password?
       !self.password_digest.blank?
     end
+=end
 end

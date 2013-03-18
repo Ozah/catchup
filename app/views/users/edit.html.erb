@@ -1,6 +1,11 @@
 <% content_for :heading do %>
   <%= link_to "Back", "#", "data-rel" => "back", "data-icon" => "back",
                 "data-role" => "button", "class" => "ui-btn-left" %>
+  <%= link_to "Sign out", signout_path, method: "delete",
+                "data-role" => "button", "class" => "ui-btn-right",
+                data: { confirm: "Once signed out you will have to request a new password 
+                  sent to your email to be able to sign in again. \nYou want to sign out ?" } %>
+    
   <h1>Edit user</h1>
 <% end %>
 
@@ -8,10 +13,10 @@
   <%= render 'shared/error_messages', object: f.object %>
   <fieldset>
     <div data-role="fieldcontain">
-      <%= f.text_field :name, placeholder: "Name" %>
+      <%= f.text_field :name, placeholder: "User name", id: "edit_user_name" %>
     </div>
     <div data-role="fieldcontain">
-      <%= f.email_field :email, placeholder: "Email" %>
+      <%= f.email_field :email, placeholder: "Email", id: "edit_user_email" %>
     </div>
     <%= f.submit "Save changes" %>
   </fieldset>
