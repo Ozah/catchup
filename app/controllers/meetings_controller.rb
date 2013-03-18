@@ -32,8 +32,12 @@ class MeetingsController < ApplicationController
     meeting.handshakes.create(user_id: params[:user_to_meet])
     
     # add the user_to_meet to contacts
-    unless relationships.find_by_contact_id(params[:user_to_meet])
-      relationships.create!(contact_id: params[:user_to_meet])
+    user_to_meet = User.find_by_id(params[:user_to_meet])
+    unless current_user.is_contact?(user_to_meet)
+      current_user.add_contact!(user_to_meet)
+    end
+    unless user_to_meet.is_contact?(current_user)
+      user_to_meet.add_contact!(current_user)
     end
     
     render 'new'
