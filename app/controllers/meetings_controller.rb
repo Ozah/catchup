@@ -72,20 +72,33 @@ class MeetingsController < ApplicationController
     current_user.update_attributes(longitude:     params[:longitude], 
                                    latitude:      params[:latitude],
                                    location_time: Time.now)
-    puts("BAM!!! longitude = #{params[:longitude]} latitude = #{params[:latitude]}")
-    render text: "success"
+    # puts("BAM!!! longitude = #{params[:longitude]} latitude = #{params[:latitude]}")
+    render :nothing => true
   end
 
   def update_page
-    puts("THIS IS MAD!!!!!!!!!!")
-    render text: "success"
+    # puts("THIS IS MAD!!!!!!!!!!")
+    # the map is used to only send the id and name of the contacts (excludes the remember_token!!)
+    @around_me = current_user.nearbys(0.03).map { |e| e.id_and_name }
+    @pending = []
+    @to_confirm = []
+    current_user.meetings.each do |m|
+      m.handshakes.each do |h|
+        if (!h.validated)
+          if (h.user_id != current_user.id)
+            @pending << User.find_by_id(h.user_id).id_and_name
+          else #h.user_id == current_user.id
+            @to_confirm << { users: m.users.where("user_id != ?", current_user.id).map { |e| e.id_and_name }, 
+                             handshake_id: h.id }
+          end
+        end
+      end
+    end
+    render json: { around_me: @around_me, pending: @pending, to_confirm: @to_confirm, user_id: current_user.id }
   end
 
   def update_page2
-    current_user.update_attributes(longitude:     params[:longitude], 
-                                   latitude:      params[:latitude],
-                                   location_time: Time.now)
-    @arround_me = current_user.nearbys(0.03); 
+    @arround_me = current_user.nearbys(0.03)
     @pending = []
     @to_confirm = []
     current_user.meetings.each do |m|
@@ -101,7 +114,7 @@ class MeetingsController < ApplicationController
       end
     end
 
-    sign_in current_user
+    # sign_in current_user
     respond_to do |format|
       format.js
     end

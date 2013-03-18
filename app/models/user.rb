@@ -82,6 +82,9 @@ class User < ActiveRecord::Base
     self.password_digest == ""
   end
 
+  def id_and_name
+    { id: self.id, name: self.name }
+  end
    
 =begin
   private 
