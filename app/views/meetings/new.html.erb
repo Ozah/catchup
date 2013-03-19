@@ -1,3 +1,6 @@
+<% content_for :page_div do %>
+  <div class="page" data-role="page" data-fullscreen="true" id="new_meeting_page">
+<% end %>
 <% content_for :heading do %>
   <%= link_to "Refresh", "#", "onclick" => "refreshCatchupPage()", 
           "data-icon" => "refresh", "data-role" => "button", "class" => "ui-btn-right" %>
@@ -27,19 +30,17 @@
 </div>
 
 <script type="text/javascript">
-
-  var getListDataId
-  $( '#page' ).bind('pageshow', function () { 
+  
+  var getListDataId;
+  
+  $(document).on('pageshow', '#new_meeting_page', function (event) {
     // updates the current locatin of the user
     getPosition(sendGeoLocPosition);
     // updates the list every few seconds
     getListDataId = setInterval(function(){
       getListData();
-    },2000)
-    getListData();
-  });
-
-  $( '#page' ).bind('pagebeforehide', function () { 
+    }, 2000);
+  }).on('pagebeforehide', '#new_meeting_page', function (event) {
     // stops updating the page every few seconds
     clearInterval(getListDataId);
   });
@@ -47,7 +48,6 @@
   var getListData = function() {
       $.ajax("<%= user_update_catch_up_page_path(current_user) %>", {
           type: 'POST',
-
           success: updateList,
           error: function() { alert('error in getListData!') }
       });
@@ -72,10 +72,6 @@
     $('#to_confirm_list').listview('refresh');
   }
 
-  var refreshCatchupPage = function() {
-    getListData();  
-  }
-
   var sendGeoLocPosition = function(position) {
       // $.ajax("<%= user_update_catch_up_page_path(current_user) %>", {
       $.ajax("<%= user_update_position_path(current_user) %>", {  
@@ -89,8 +85,9 @@
       });
   }
 
-  var populate_list = function(){}
-
+  var refreshCatchupPage = function() {
+    getListData();  
+  }
 </script>
 
 <%= render :partial => 'layouts/footer', :locals => {:footer_tab => "catchup"} %>

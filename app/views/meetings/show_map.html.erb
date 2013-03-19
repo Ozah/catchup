@@ -1,3 +1,6 @@
+<% content_for :page_div do %>
+  <div class="page" data-role="page" data-fullscreen="true" id="show_map_page">
+<% end %>
 <% content_for :heading do %>
   <button onclick="refresh()" class="ui-btn-left" data-icon= "refresh">Refresh</button>
   <%= link_to "List", user_show_list_path(current_user), "data-icon" => "grid",
