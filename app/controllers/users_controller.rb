@@ -39,6 +39,12 @@ class UsersController < ApplicationController
 
   #PUT /users/1  user_path(user) - update user with id 1
   def update
+    # puts (params[:user][:password].to_s)
+    #removes the psw and psw conf if the fields are empty
+    if params[:user][:password].empty? && params[:user][:password_confirmation].empty?
+      params[:user].delete(:password)
+      params[:user].delete(:password_confirmation)
+    end
     if @user.update_attributes(params[:user])
       flash[:success] = "Profile updated"
       sign_in @user

@@ -17,9 +17,10 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, 
+  attr_accessible :name, :email, :password, :password_confirmation,
                   :latitude, :longitude, :location_time
-  #has_secure_password
+  
+  has_secure_password
   reverse_geocoded_by :latitude, :longitude
 
   has_many :infos, dependent: :destroy
@@ -46,10 +47,12 @@ class User < ActiveRecord::Base
                        confirmation: true,
                        length: { within: 6..40 },
                        unless: :already_has_password?
+
+  validates :password_confirmation, presence: true
 =end
+  
 
-  #validates :password_confirmation, presence: true
-
+  
   def add_contact!(other_user)
     relationships.create!(contact_id: other_user.id)
   end
@@ -70,10 +73,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def authenticate(password)
-    self.password_digest == password
-  end
-
   def set_password(password)
     self.password_digest = password
   end
@@ -86,11 +85,11 @@ class User < ActiveRecord::Base
     { id: self.id, name: self.name }
   end
    
-=begin
+
   private 
 
     def already_has_password?
       !self.password_digest.blank?
     end
-=end
+
 end

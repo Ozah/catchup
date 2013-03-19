@@ -6,8 +6,7 @@
                 "data-role" => "button", "class" => "ui-btn-left" %>
   <%= link_to "Sign out", signout_path, method: "delete",
                 "data-role" => "button", "class" => "ui-btn-right",
-                data: { confirm: "Once signed out you will have to request a new password 
-                  sent to your email to be able to sign in again. \nYou want to sign out ?" } %>
+                data: { confirm: "If you haven't set your email and password you won't be able to log in again and you will loose all your data. \nStill want to sign out ?" } %>
     
   <h1>Edit user</h1>
 <% end %>
@@ -16,18 +15,29 @@
   <%= render 'shared/error_messages', object: f.object %>
   <fieldset>
     <div data-role="fieldcontain">
+      <%= f.label :name, "User name:" %>
+      <br>
       <%= f.text_field :name, placeholder: "User name", id: "edit_user_name" %>
-    </div>
-    <div data-role="fieldcontain">
+    
+      <%= f.label :email, "Email:" %>
+      <br>
       <%= f.email_field :email, placeholder: "Email", id: "edit_user_email" %>
     </div>
+    <div data-role="collapsible">
+      <h2>Change password</h2>
+      <div data-role="fieldcontain">
+        <%= f.password_field :password, placeholder: "Password", id: "edit_user_psw" %>
+      </div>
+      <div data-role="fieldcontain">
+        <%= f.password_field :password_confirmation, placeholder: "Password confirmation", id: "edit_user_pswconf" %>
+      </div>
+    </div>
+    
     <%= f.submit "Save changes" %>
   </fieldset>
   <div data-role="content">
     <%= gravatar_for @user %>
-  </div>
-  <div data-role="content">
-    <a href="http://gravatar.com/emails">change</a>
+    <a href="http://gravatar.com/emails">change image</a>
   </div>
 <% end %>
 
