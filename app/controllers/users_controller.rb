@@ -22,9 +22,11 @@ class UsersController < ApplicationController
 
   #POST /users - users_path - creates a new user
   def create
-    @user = User.new(params[:user])
-    @user.create_remember_token
+    psw = SecureRandom.urlsafe_base64
+    @user = User.new(params[:user].merge(password: psw, password_confirmation: psw))
+    # @user.create_remember_token
     if @user.save
+      @user.create_remember_token
       sign_in @user
       flash[:success] = "Welcome to catchup!"
       redirect_to @user
@@ -39,13 +41,19 @@ class UsersController < ApplicationController
 
   #PUT /users/1  user_path(user) - update user with id 1
   def update
+    error = false
     # puts (params[:user][:password].to_s)
     #removes the psw and psw conf if the fields are empty
-    if params[:user][:password].empty? && params[:user][:password_confirmation].empty?
+    if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
       params[:user].delete(:password)
       params[:user].delete(:password_confirmation)
+    else #the password is beeing reset
+      if params[:user][:email].blank?
+        flash[:error] = "Email cannot be empty when setting a password"
+        error = true
+      end
     end
-    if @user.update_attributes(params[:user])
+    if @user.update_attributes(params[:user]) && !error
       flash[:success] = "Profile updated"
       sign_in @user
       redirect_to @user

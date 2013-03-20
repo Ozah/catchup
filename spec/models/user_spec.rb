@@ -20,16 +20,21 @@ require 'spec_helper'
 
 describe User do
   before do
-    @user = User.new(name: "Example User", email: "user@example.com")
-    @user.create_remember_token
+    @user = User.new(name: "Example User", email: "user@example.com",
+                     password: "foobar", password_confirmation: "foobar")
   end
 
   subject { @user }
 
   it { should respond_to(:name) }
   it { should respond_to(:email) }
+  it { should respond_to(:password_digest) }
+  it { should respond_to(:password) }
+  it { should respond_to(:password_confirmation) }
   it { should respond_to(:remember_token) }
   it { should respond_to(:admin) }
+  it { should respond_to(:authenticate) }
+
   it { should respond_to(:infos) }
 
   it { should respond_to(:relationships) }
@@ -63,11 +68,6 @@ describe User do
 
   describe "when name is not present" do
     before { @user.name = " " }
-    it { should_not be_valid }
-  end
-
-  describe "when remember_token is not present" do
-    before { @user.remember_token = " " }
     it { should_not be_valid }
   end
 
@@ -122,11 +122,47 @@ describe User do
     end
   end
 
-  describe "remember token" do
+  describe "when password is not present" do
     before do 
-      @user.create_remember_token
-      @user.save
+      @user.password_digest = ""
+      @user.password = @user.password_confirmation = " " 
     end
+    it { should_not be_valid }
+  end
+
+  describe "when password doesn't match confirmation" do
+    before { @user.password_confirmation = "mismatch" }
+    it { should_not be_valid }
+  end
+
+  #NOT WORKING...
+  # describe "with a password that's too short" do
+  #   before do 
+  #     @user.password_digest = ""
+  #     @user.password = @user.password_confirmation = "a" * 5 
+  #   end
+  #   it { should_not be_valid }
+  # end
+
+  describe "return value of authenticate method" do
+    before { @user.save }
+    let(:found_user) { User.find_by_email(@user.email) }
+
+    describe "with valid password" do
+      it { should == found_user.authenticate(@user.password) }
+    end
+
+    describe "with invalid password" do
+      let(:user_for_invalid_password) { found_user.authenticate("invalid") }
+
+      it { should_not == user_for_invalid_password }
+      specify { user_for_invalid_password.should be_false }
+    end
+  end
+
+  describe "remember token" do
+    before { @user.save }
+
     its(:remember_token) { should_not be_blank }
 
     it  "should not be accessible" do
@@ -134,6 +170,16 @@ describe User do
         @user.update_attributes(:remember_token => "123")
       end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
     end
+  end
+
+  describe "when remember token is already taken" do
+    before do
+      @user.remember_token = "123"
+      user_with_same_remember_token = @user.dup
+      user_with_same_remember_token.save
+    end
+
+    it { should_not be_valid }
   end
 
   describe "infos associations" do

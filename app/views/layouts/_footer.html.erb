@@ -19,7 +19,7 @@
                       "class" => contacts_class %>
       </li>
       <li><%= link_to "Catchup", new_user_meeting_path(current_user),"data-icon" => "add",
-                      "class" => catchup_class %>
+                      "class" => catchup_class, "id" => "catchup_footer" %>
       </li>
       <li><%= link_to "History", user_show_list_path(current_user),"data-icon" => "grid",
                       "class" => list_class %>

@@ -15,21 +15,19 @@
   <%= render 'shared/error_messages', object: f.object %>
   <fieldset>
     <div data-role="fieldcontain">
-      <%= f.label :name, "User name:" %>
-      <br>
+      <%= f.label :name, "User name:", for: "edit_user_name" %>
       <%= f.text_field :name, placeholder: "User name", id: "edit_user_name" %>
-    
-      <%= f.label :email, "Email:" %>
-      <br>
+
+      <%= f.label :email, "Email:", for: "edit_user_email" %>
       <%= f.email_field :email, placeholder: "Email", id: "edit_user_email" %>
     </div>
     <div data-role="collapsible">
       <h2>Change password</h2>
       <div data-role="fieldcontain">
-        <%= f.password_field :password, placeholder: "Password", id: "edit_user_psw" %>
+        <%= f.password_field :password, placeholder: "New password", id: "edit_user_psw" %>
       </div>
       <div data-role="fieldcontain">
-        <%= f.password_field :password_confirmation, placeholder: "Password confirmation", id: "edit_user_pswconf" %>
+        <%= f.password_field :password_confirmation, placeholder: "New password confirmation", id: "edit_user_pswconf" %>
       </div>
     </div>
     

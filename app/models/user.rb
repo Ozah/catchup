@@ -33,15 +33,19 @@ class User < ActiveRecord::Base
   # Ensuring email uniqueness by downcasing the email attribute.
   before_save { email.downcase! }
 
-  #before_save :create_remember_token
+  # before_save { create_remember_token }
 
   validates :name,  presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false },
-                    :allow_blank => true
-  validates :remember_token, presence: true, uniqueness: true
+                    allow_blank: true
 
+  validates :remember_token, uniqueness: true
+  validates :password, presence: true, length: { within: 6..40 },
+                      unless: :already_has_password?
+  validates :password_confirmation, presence: true,
+                      unless: :already_has_password?
 =begin  
   validates :password, presence: true,
                        confirmation: true,
@@ -61,6 +65,10 @@ class User < ActiveRecord::Base
     relationships.find_by_contact_id(other_user.id)
   end
 
+  def id_and_name
+    { id: self.id, name: self.name }
+  end
+
   def create_remember_token
     done = false
     until done do 
@@ -68,28 +76,19 @@ class User < ActiveRecord::Base
       #makes sure the remember_token is unique
       unless User.find_by_remember_token(token)
         self.remember_token = token
+        self.save
         done = true
       end
     end
   end
 
-  def set_password(password)
-    self.password_digest = password
-  end
-
-  def remove_password
-    self.password_digest == ""
-  end
-
-  def id_and_name
-    { id: self.id, name: self.name }
-  end
-   
-
   private 
+  # def create_remember_token
+  #     self.remember_token = SecureRandom.urlsafe_base64
+  # end
 
-    def already_has_password?
-      !self.password_digest.blank?
-    end
-
+  def already_has_password?
+    !self.password_digest.blank?
+  end
+    
 end
