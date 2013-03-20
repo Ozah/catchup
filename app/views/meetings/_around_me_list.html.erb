@@ -1,0 +1,40 @@
+<% unless invited_by.blank? %>
+	<% invited_by.each do |item| %>
+	  <li data-theme="e" data-icon="plus">
+  	<!-- here I use the first person's name in case of a group catchup -->
+	    <%= link_to item[:users][0].name, 
+	    				user_confirm_meeting_path(current_user, handshake_id: item[:handshake_id]), 
+					    data: { confirm: "Confirming?" }
+					     %>
+	  </li>
+	<% end %>
+<% end %>
+
+<% unless invited.blank? %>
+	<% invited.each do |contact| %>
+	  <li data-theme="e">
+	    <%= contact.name %>
+	  </li>
+	<% end %>
+<% end %>
+
+
+<% unless catching_up_with.blank? %>
+	<% catching_up_with.each do |contact| %>
+	  <li data-theme="b">
+	    <%= contact.name %>
+	  </li>
+	<% end %>
+<% end %>
+
+<% unless around_me.blank? %>
+	<% around_me.each do |contact| %>
+	  <li data-theme="c" data-icon="plus">
+	    <%= link_to contact.name, 
+					    user_meetings_path(current_user, user_to_meet: contact),
+					    method: :post, 
+					    data: { confirm: "You are catching up with #{contact.name}?" }
+			%>
+	  </li>
+	<% end %>
+<% end %>

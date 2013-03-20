@@ -9,6 +9,7 @@ Catchup::Application.routes.draw do
     match '/update_catch_up_page', to: "meetings#update_page"
     match '/update_position',      to: "meetings#update_position"
     match '/confirm_meeting',      to: "meetings#confirm"
+    match '/manual_entry',         to: "meetings#manual"
   end
   resources :sessions, only: [:new, :create, :destroy]
   resources :infos,    only: [:new, :create, :destroy]

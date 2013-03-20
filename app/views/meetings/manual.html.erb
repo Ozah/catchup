@@ -1,0 +1,16 @@
+<% content_for :page_div do %>
+  <div class="page" data-role="page" data-fullscreen="true" id="manual_meeting_page">
+<% end %>
+<% content_for :heading do %>
+  <%= link_to "Back", "#", "data-rel" => "back", "data-icon" => "back",
+                "data-role" => "button", "class" => "ui-btn-left" %>
+  <h1>Catch up (manual)</h1>
+<% end %>
+<div id="new_meeting_ctrlgrp">
+  <div data-role="controlgroup" data-type="horizontal">
+    <%= link_to "Use contact list", user_new_with_contact_path(current_user), "id" => "",  "data-role" => "button", "data-theme" => "b" %>
+    <%= link_to "Use email", user_new_with_email_path(current_user), "id" => "",  "data-role" => "button", "data-theme" => "b" %>
+  </div>
+</div>
+
+<%= render :partial => 'layouts/footer', :locals => {:footer_tab => "catchup"} %>

@@ -58,11 +58,11 @@ class User < ActiveRecord::Base
 
   
   def add_contact!(other_user)
-    relationships.create!(contact_id: other_user.id)
+    relationships.create!(contact_id: other_user.id) unless current_user.contacts.include?(other_user)
   end
 
   def is_contact?(other_user)
-    relationships.find_by_contact_id(other_user.id)
+    self.contacts.include?(other_user)
   end
 
   def id_and_name
