@@ -3,8 +3,6 @@ $(document).bind("mobileinit", function() { // We change default values
     $.mobile.defaultPageTransition = "none";
 });
 
-
-
 function getPosition(sendGeoLocPosition) {
   if ( navigator.geolocation ) {
     //alert("geolocalisation supported");

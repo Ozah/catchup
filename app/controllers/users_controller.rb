@@ -22,6 +22,7 @@ class UsersController < ApplicationController
 
   #POST /users - users_path - creates a new user
   def create
+    # a password is created automatically because has_secure_password validates the presence of psw
     psw = SecureRandom.urlsafe_base64
     @user = User.new(params[:user].merge(password: psw, password_confirmation: psw))
     # @user.create_remember_token
@@ -52,6 +53,10 @@ class UsersController < ApplicationController
         flash[:error] = "Email cannot be empty when setting a password"
         error = true
       end
+      if params[:user][:password].length < 6
+        flash[:error] = "Password too short, minimum 5 characters"
+        error = true
+      end  
     end
     if @user.update_attributes(params[:user]) && !error
       flash[:success] = "Profile updated"

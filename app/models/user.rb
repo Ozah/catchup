@@ -42,7 +42,8 @@ class User < ActiveRecord::Base
                     allow_blank: true
 
   validates :remember_token, uniqueness: true
-  validates :password, presence: true, length: { within: 6..40 },
+
+  validates :password, presence: true, length: { in: 6..40 },
                       unless: :already_has_password?
   validates :password_confirmation, presence: true,
                       unless: :already_has_password?
@@ -58,10 +59,10 @@ class User < ActiveRecord::Base
 
   
   def add_contact!(other_user)
-    relationships.create!(contact_id: other_user.id) unless current_user.contacts.include?(other_user)
+    self.relationships.create!(contact_id: other_user.id) unless self.has_contact?(other_user)
   end
 
-  def is_contact?(other_user)
+  def has_contact?(other_user)
     self.contacts.include?(other_user)
   end
 

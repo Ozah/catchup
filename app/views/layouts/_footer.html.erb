@@ -12,7 +12,7 @@
 <div data-role="footer" data-id="main-footer" data-position="fixed" data-tap-toggle="false">
   <div data-role="navbar">
     <ul>
-      <li><%= link_to "Profile", start_url,"data-icon" => "home",
+      <li><%= link_to "Profile", user_path(current_user),"data-icon" => "home",
                       "class" => profile_class %>
       </li>
       <li><%= link_to "Contacts", contacts_path,"data-icon" => "star",

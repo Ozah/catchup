@@ -48,9 +48,8 @@ class MeetingsController < ApplicationController
     end
     
     # add the user_to_meet to contacts
-    user_to_meet = User.find_by_id(params[:user_to_meet])
-    current_user.add_contact!(user_to_meet) unless current_user.is_contact?(user_to_meet)    
-    user_to_meet.add_contact!(current_user) unless user_to_meet.is_contact?(current_user)
+    current_user.add_contact!(user_to_meet)   
+    user_to_meet.add_contact!(current_user)
       
     render :nothing => true
   end
@@ -90,7 +89,7 @@ class MeetingsController < ApplicationController
   end
 
   def update_page
-    # puts("THIS IS MAD!!!!!!!!!!")
+    # 0.03 miles = 48.28032 meters
     nearbys = current_user.nearbys(0.03).where(location_time: (Time.now - 10.minutes)..Time.now)
     @around_me = nearbys
     @invited = []
@@ -121,22 +120,6 @@ class MeetingsController < ApplicationController
       end
     end
 
-    # current_user.meetings.each do |m|
-    #   m.handshakes.each do |h|
-    #     if (!h.validated)
-    #       if (h.user_id != current_user.id)
-    #         @invited << User.find_by_id(h.user_id)
-    #       else #h.user_id == current_user.id
-    #         @invited_by << { users: m.users.where("user_id != ?", current_user.id), 
-    #                          handshake_id: h.id }
-    #       end
-    #     else #h.validated
-    #       if (h.user_id != current_user.id) #TODO: add date < 10 min
-    #         @catching_up_with << User.find_by_id(h.user_id)
-    #       end
-    #     end
-    #   end
-    # end
     respond_to do |format|
       format.js
     end
@@ -179,6 +162,23 @@ class MeetingsController < ApplicationController
         end
       end
     end
+
+    # current_user.meetings.each do |m|
+    #   m.handshakes.each do |h|
+    #     if (!h.validated)
+    #       if (h.user_id != current_user.id)
+    #         @invited << User.find_by_id(h.user_id)
+    #       else #h.user_id == current_user.id
+    #         @invited_by << { users: m.users.where("user_id != ?", current_user.id), 
+    #                          handshake_id: h.id }
+    #       end
+    #     else #h.validated
+    #       if (h.user_id != current_user.id) #TODO: add date < 10 min
+    #         @catching_up_with << User.find_by_id(h.user_id)
+    #       end
+    #     end
+    #   end
+    # end
 
     # sign_in current_user
     respond_to do |format|

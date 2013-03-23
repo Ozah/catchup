@@ -16,10 +16,11 @@
   </ul>
 </div>
 
+<%= render :partial => 'layouts/footer', :locals => {:footer_tab => "catchup"} %>
+
 <script type="text/javascript">
-  
   var getListDataId;
-  
+
   $(document).on('pageshow', '#new_meeting_page', function (event) {
     // updates the current locatin of the user
     getPosition(sendGeoLocPosition);
@@ -42,25 +43,6 @@
       });
   }
 
-  var updateList = function(data) {
-    // alert(data["arround_me"][1].name);
-    var around_me_list = data["around_me"];
-    $("#around_me_list").empty();
-    for(i=0; i<around_me_list.length; i++) {
-      var contact = around_me_list[i];
-      $("#around_me_list").append("<li><a href=\"/users/"+data["user_id"]+"/meetings?user_to_meet="+contact.id+"\" data-confirm=\"You are catching up with "+contact.name+"?\" data-method=\"post\">"+contact.name+"</a></li>");
-    }
-    $('#around_me_list').listview('refresh');
-
-    var to_confirm_list = data["to_confirm"];
-    $('#to_confirm_list').empty();
-    for(i=0; i<to_confirm_list.length; i++) {
-      var contact = to_confirm_list[i];
-      $("#to_confirm_list").append("<li><a href=\"/users/"+data["user_id"]+"/confirm_meeting?handshake_id="+contact["handshake_id"]+"\" data-confirm=\"You are you sure?\">"+contact["users"][0].name+"</a></li>");
-    }
-    $('#to_confirm_list').listview('refresh');
-  }
-
   var sendGeoLocPosition = function(position) {
       // $.ajax("<%= user_update_catch_up_page_path(current_user) %>", {
       $.ajax("<%= user_update_position_path(current_user) %>", {  
@@ -77,6 +59,5 @@
   var refreshCatchupPage = function() {
     getListData();  
   }
-</script>
 
-<%= render :partial => 'layouts/footer', :locals => {:footer_tab => "catchup"} %>
+</script>

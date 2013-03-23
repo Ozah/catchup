@@ -40,7 +40,7 @@ describe User do
   it { should respond_to(:relationships) }
   it { should respond_to(:contacts) }
   it { should respond_to(:add_contact!) }
-  it { should respond_to(:is_contact?) }
+  it { should respond_to(:has_contact?) }
 
   it { should respond_to(:handshakes) }
   it { should respond_to(:meetings) }
@@ -123,26 +123,16 @@ describe User do
   end
 
   describe "when password is not present" do
-    before do 
-      @user.password_digest = ""
-      @user.password = @user.password_confirmation = " " 
-    end
-    it { should_not be_valid }
+    let(:user_with_blank_password) { User.new(name: "Example User2", email: "user2@example.com",
+                     password: "", password_confirmation: "") }
+      
+    specify { user_with_blank_password.should_not be_valid }
   end
 
   describe "when password doesn't match confirmation" do
     before { @user.password_confirmation = "mismatch" }
     it { should_not be_valid }
   end
-
-  #NOT WORKING...
-  # describe "with a password that's too short" do
-  #   before do 
-  #     @user.password_digest = ""
-  #     @user.password = @user.password_confirmation = "a" * 5 
-  #   end
-  #   it { should_not be_valid }
-  # end
 
   describe "return value of authenticate method" do
     before { @user.save }
@@ -161,7 +151,10 @@ describe User do
   end
 
   describe "remember token" do
-    before { @user.save }
+    before do 
+      @user.save 
+      @user.create_remember_token
+    end
 
     its(:remember_token) { should_not be_blank }
 
@@ -180,6 +173,16 @@ describe User do
     end
 
     it { should_not be_valid }
+  end
+
+  describe "update without password" do
+    before do
+      @user.save
+      @user.update_attributes(name: "new name")
+      @user.save
+    end
+
+    it { should be_valid }
   end
 
   describe "infos associations" do
@@ -207,7 +210,7 @@ describe User do
       @user.add_contact!(other_user)
     end
 
-    it { should be_is_contact(other_user)}
+    it { should be_has_contact(other_user)}
     its(:contacts) { should include(other_user)}
   end
 

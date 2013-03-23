@@ -19,7 +19,7 @@ describe "User pages" do
     it { should have_link("Add link", href: new_info_path) }
 
     describe "footer navbar" do
-      it { should have_link("Profile", href: start_url) }
+      it { should have_link("Profile", href: user_path(user)) }
       it { should have_link("Contacts", href: contacts_path) }
       it { should have_link("Catchup", href: new_user_meeting_path(user)) }
       it { should have_link("History", href: user_show_list_path(user)) }
@@ -57,19 +57,15 @@ describe "User pages" do
   end
 
 
-  describe "signup page" do
-    before { visit signup_path }
-
-    it { should have_selector('h1',    text: 'Sign up') }
-  end
-
   describe "signup" do
 
     before { visit signup_path }
 
+    it { should have_selector('h1', text: 'Sign up') }
+
     let(:submit) { "Create my account" }
 
-    describe "with invalid information" do
+    describe "with blank fields" do
       it "should not create a user" do
         expect { click_button submit }.not_to change(User, :count)
       end
@@ -146,7 +142,7 @@ describe "User pages" do
       it { should have_content('error') }
     end
 
-    describe "change name and email with valid information" do
+    describe "with valid name and email" do
       let(:new_name)  { "New Name" }
       let(:new_email) { "new@example.com" }
       before do
@@ -161,7 +157,7 @@ describe "User pages" do
       specify { user.reload.email.should == new_email }
     end
 
-    describe "change password with valid information" do
+    describe "with valid psw and pswconf" do
       let(:new_psw)  { "blabla" }
       before do
         fill_in "edit_user_psw",  with: new_psw
@@ -171,7 +167,7 @@ describe "User pages" do
       it { should have_selector('div#alert-success') }
     end
 
-    describe "change everything with valid information" do
+    describe "with valid name email psw and pswconf" do
       let(:new_name)  { "New Name" }
       let(:new_email) { "new@example.com" }
       let(:new_psw)  { "blabla" }
@@ -189,7 +185,7 @@ describe "User pages" do
       specify { user.reload.email.should == new_email }
     end
 
-    describe "change password with unmatching confirmation" do
+    describe "with unmatching psw and pswconf" do
       let(:new_psw)  { "blabla" }
       let(:new_pswconf)  { "bla" }
       before do
@@ -200,7 +196,7 @@ describe "User pages" do
       it { should have_content('error') }
     end
 
-    describe "change password without email" do
+    describe "with valid password and without email" do
       let(:new_psw)  { "blabla" }
       before do
         fill_in "edit_user_email", with: ""
@@ -209,6 +205,16 @@ describe "User pages" do
         click_button "Save changes"
       end
       it { should have_content('Email cannot be empty') }
+    end
+
+    describe "with short password" do
+      let(:new_psw)  { "bla" }
+      before do
+        fill_in "edit_user_psw",  with: new_psw
+        fill_in "edit_user_pswconf", with: new_psw
+        click_button "Save changes"
+      end
+      it { should have_content('too short') }
     end
 
   end
