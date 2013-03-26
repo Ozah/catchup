@@ -8,6 +8,9 @@ class StaticPagesController < ApplicationController
   end
 
   def help
+  	Pusher['test_channel'].trigger('greet', {
+		  :greeting => "Hello there!"
+		})
   end
 
 end
