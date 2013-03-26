@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Meeting Pages" do
+describe "Meeting Pages", js: true do
   
   subject { page }
 
@@ -26,20 +26,24 @@ describe "Meeting Pages" do
 
       before do
         user2.location_time = time
-        click_link "Refresh"
+        # click_link "Refresh"
+        # visit new_user_meeting_path(user)
       end
 
       it { find('#around_me_list').should have_selector('li') }
       it { find('#around_me_list').find('li').should have_content(user2.name) }
-      it { find('#around_me_list').find('li').should have_id("arround_me") }
+      it { find('#around_me_list').should have_selector("#arround_me") }
       
       describe "inviting user2" do
         before do
           click_link user2.name
-          click_link "Refresh"
+          page.driver.browser.switch_to.alert.accept
+          # the render caused by clicking the confirm doesn't seem to be registered 
+          # therefore I refresh the page manually
+          click_link "Refresh" 
         end
-        it { find('#around_me_list').find('li').should_not have_id("arround_me") }
-        it { find('#around_me_list').find('li').should have_id("invited") }
+        it { find('#around_me_list').should_not have_selector("#arround_me") }
+        it { find('#around_me_list').should have_selector("#invited") }
       end
     end
 

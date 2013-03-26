@@ -15,6 +15,7 @@ gem 'faker', '1.0.1'
 # to pass data from controller to JS:
 gem 'gon'
 gem 'geocoder'
+gem 'pusher'
 
 group :development, :test do
   gem 'rspec-rails'

@@ -57,7 +57,8 @@ class MeetingsController < ApplicationController
   def confirm
     Handshake.find_by_id(params[:handshake_id]).update_attributes(validated: true)
     # redirect_to user_show_list_path(current_user)
-    render :nothing => true
+    # render :nothing => true
+    render 'update_page'
   end
 
   def show_list
@@ -89,12 +90,22 @@ class MeetingsController < ApplicationController
   end
 
   def update_page
+    update_list
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def update_list
     # 0.03 miles = 48.28032 meters
     nearbys = current_user.nearbys(0.03).where(location_time: (Time.now - 10.minutes)..Time.now)
     @around_me = nearbys
     @invited = []
     @invited_by = []
     @catching_up_with = []
+    @old_invited = []
+    @old_invited_by = []
 
     nearbys.each do |p|
       p.meetings.where(created_at: (Time.now - 10.minutes)..Time.now).each do |m|
@@ -105,8 +116,6 @@ class MeetingsController < ApplicationController
         end
       end
     end
-
-    @around_me = nearbys - @catching_up_with
 
     current_user.meetings.each do |m|
       others = m.handshakes.where("user_id != ?", current_user.id)
@@ -120,10 +129,11 @@ class MeetingsController < ApplicationController
       end
     end
 
-    respond_to do |format|
-      format.js
-    end
+    # not working for invited_by since the array has different elements
+    @around_me = nearbys - @catching_up_with - @invited - @invited_by
+
   end
+
 
   def update_page3
     # puts("THIS IS MAD!!!!!!!!!!")

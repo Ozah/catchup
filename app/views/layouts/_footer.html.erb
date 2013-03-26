@@ -9,7 +9,7 @@
       when footer_tab == 'info'     then info_class     = active
    end
 %>
-<div data-role="footer" data-id="main-footer" data-position="fixed" data-tap-toggle="false">
+<div data-role="footer" data-id="main-footer" data-position="fixed" data-tap-toggle="false" id="main-footer">
   <div data-role="navbar">
     <ul>
       <li><%= link_to "Profile", user_path(current_user),"data-icon" => "home",

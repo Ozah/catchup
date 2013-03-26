@@ -37,6 +37,8 @@ rails generate migration AddAddressToUser address:string
 \
 oli.handshakes.where("validated = false")\
 \
+bundle exec rake db:test:purge\
+\
 \
 \
 \
