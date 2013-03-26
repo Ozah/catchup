@@ -1,6 +1,6 @@
 <% unless invited_by.blank? %>
 	<% invited_by.each do |item| %>
-	  <li data-theme="e" data-icon="plus">
+	  <li data-theme="e" data-icon="plus" id="invited_by">
   	<!-- here I use the first person's name in case of a group catchup -->
 	    <%= link_to item[:users][0].name, 
 	    				user_confirm_meeting_path(current_user, handshake_id: item[:handshake_id]), 
@@ -12,7 +12,7 @@
 
 <% unless invited.blank? %>
 	<% invited.each do |contact| %>
-	  <li data-theme="e">
+	  <li data-theme="e" id="invited">
 	    <%= contact.name %>
 	  </li>
 	<% end %>
@@ -21,7 +21,7 @@
 
 <% unless catching_up_with.blank? %>
 	<% catching_up_with.each do |contact| %>
-	  <li data-theme="b">
+	  <li data-theme="b" id="catching_up_with">
 	    <%= contact.name %>
 	  </li>
 	<% end %>
@@ -29,7 +29,7 @@
 
 <% unless around_me.blank? %>
 	<% around_me.each do |contact| %>
-	  <li data-theme="c" data-icon="plus">
+	  <li data-theme="c" data-icon="plus" id="arround_me">
 	    <%= link_to contact.name, 
 					    user_meetings_path(current_user, user_to_meet: contact),
 					    method: :post, 

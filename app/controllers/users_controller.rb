@@ -25,9 +25,9 @@ class UsersController < ApplicationController
     # a password is created automatically because has_secure_password validates the presence of psw
     psw = SecureRandom.urlsafe_base64
     @user = User.new(params[:user].merge(password: psw, password_confirmation: psw))
-    # @user.create_remember_token
+    @user.create_remember_token
     if @user.save
-      @user.create_remember_token
+      # @user.create_remember_token
       sign_in @user
       flash[:success] = "Welcome to catchup!"
       redirect_to @user

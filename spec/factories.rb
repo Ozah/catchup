@@ -1,4 +1,5 @@
 FactoryGirl.define do
+
   factory :user do
     sequence(:name)  { |n| "Person #{n}" }
     sequence(:email) { |n| "person_#{n}@example.com"}
@@ -38,8 +39,8 @@ FactoryGirl.define do
       longitude 2.442739 
       latitude 48.849449
       location_time { Time.now }
-    end
-    
+    end 
+
   end
 
   factory :info do
@@ -47,8 +48,7 @@ FactoryGirl.define do
   end
 
   factory :meeting do
-    latitude  100.0
-    longitude 100.0
+    latitude  2.441416
+    longitude 48.849325
   end
-
 end

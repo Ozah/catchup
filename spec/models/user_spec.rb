@@ -203,15 +203,29 @@ describe User do
     end
   end
 
-  describe "add contact" do
-    let!(:other_user) { FactoryGirl.create(:user) }
-    before do
-      @user.save
-      @user.add_contact!(other_user)
+  describe "contacts" do
+    describe "add contact" do
+      let!(:other_user) { FactoryGirl.create(:user) }
+      before do
+        @user.save
+        @user.add_contact!(other_user)
+      end
+
+      it { should be_has_contact(other_user)}
+      its(:contacts) { should include(other_user)}
+      specify { @user.contacts.length.should equal(1) }
     end
 
-    it { should be_has_contact(other_user)}
-    its(:contacts) { should include(other_user)}
+    describe "add contact twice" do
+      let!(:other_user) { FactoryGirl.create(:user) }
+      before do
+        @user.save
+        @user.add_contact!(other_user)
+        @user.add_contact!(other_user)
+      end
+      specify { @user.contacts.length.should equal(1) }
+    end
+
   end
 
   describe "meetings associations" do

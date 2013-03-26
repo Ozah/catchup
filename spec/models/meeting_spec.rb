@@ -25,6 +25,8 @@ describe Meeting do
   it { should respond_to(:users) }
   its(:users) { should include(user1) }
   its(:users) { should include(user2) }
+  specify { user1.meetings.should include(meeting) }
+  specify { user2.meetings.should include(meeting) }
 
   describe "wrong user" do
     let(:user3) { FactoryGirl.create(:user) }
