@@ -1,3 +1,9 @@
+<% if invited_by.blank? && invited.blank? && catching_up_with.blank? && around_me.blank? %>
+	<div id="no_one_arround">
+		No one is around...
+	</div>
+<% end  %>
+
 <% unless invited_by.blank? %>
 	<% invited_by.each do |item| %>
 	  <li data-theme="e" data-icon="plus" id="invited_by">

@@ -7,10 +7,11 @@
 #  longitude  :float
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  location   :string(255)
 #
 
 class Meeting < ActiveRecord::Base
-  attr_accessible :latitude, :longitude
+  attr_accessible :latitude, :longitude, :location
 
   reverse_geocoded_by :latitude, :longitude
 

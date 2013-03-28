@@ -50,5 +50,6 @@ FactoryGirl.define do
   factory :meeting do
     latitude  2.441416
     longitude 48.849325
+    location "Ircam"
   end
 end
