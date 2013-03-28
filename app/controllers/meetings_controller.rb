@@ -1,8 +1,8 @@
 class MeetingsController < ApplicationController
-
   #GET /users/:user_id/meetings/new - new_meetings_user_path - return an HTML form for creating a new meeting belonging to a specific user
   def new
     #@meeting = Meeting.new
+    update_old_list
   end
 
   def new_with_email
@@ -10,6 +10,15 @@ class MeetingsController < ApplicationController
   end
 
   def manual
+  end
+
+  def edit
+  end
+
+  def show
+    # puts("PARAMS-SHOW-MEETING: ")
+    @meeting = Meeting.find_by_id(params[:id])
+    @other_users = @meeting.users.where("user_id != ?", current_user.id)  
   end
 
   def new_with_contact
@@ -28,6 +37,7 @@ class MeetingsController < ApplicationController
     end
   end
 
+  #POST /user_meetings - user_meetings_path - creates a new meeting
   def create
     user_to_meet = User.find_by_id(params[:user_to_meet])
     first_to_invite = true
@@ -62,15 +72,15 @@ class MeetingsController < ApplicationController
   end
 
   def show_list
-    @user_list = []
+    @list = []
     current_user.meetings.each do |m|
       m.handshakes.where("validated = true").where("user_id != ?", current_user.id).each do |h|
-        @user_list << User.find_by_id(h.user_id)
+        @list << { user: User.find_by_id(h.user_id), meeting: m }
       end
     end
 
     #to get the elements from most recent
-    @user_list.reverse!
+    @list.reverse!
   end
 
   def show_map
@@ -82,9 +92,7 @@ class MeetingsController < ApplicationController
   end
 
   def update_position
-    current_user.update_attributes(longitude:     params[:longitude], 
-                                   latitude:      params[:latitude],
-                                   location_time: Time.now)
+    current_user.update_position(params[:latitude], params[:longitude])
     # puts("BAM!!! longitude = #{params[:longitude]} latitude = #{params[:latitude]}")
     render :nothing => true
   end
@@ -92,120 +100,6 @@ class MeetingsController < ApplicationController
   def update_page
     update_list
 
-    respond_to do |format|
-      format.js
-    end
-  end
-
-  def update_old_list
-    @old_invited = []
-    @old_invited_by = []
-
-    current_user.meetings.where(["created_at < ?", Time.now - 10.minutes]).each do |m|
-      others = m.handshakes.where("user_id != ?", current_user.id)
-      others.where(validated: false).each do |h|
-        @old_invited << User.find_by_id(h.user_id)
-      end
-
-      m.handshakes.where(user_id: current_user.id, validated: false).each do |h|
-        @old_invited_by << { users: m.users.where("user_id != ?", current_user.id), 
-                             handshake_id: h.id }
-      end
-    end
-  end
-
-  def update_list
-    # 0.03 miles = 48.28032 meters
-    nearbys = current_user.nearbys(0.03).where(location_time: (Time.now - 10.minutes)..Time.now)
-    @around_me = nearbys
-    @invited = []
-    @invited_by = []
-    @catching_up_with = []   
-
-    nearbys.each do |p|
-      p.meetings.where(created_at: (Time.now - 10.minutes)..Time.now).each do |m|
-        if m.handshakes.all? { |h| h.validated == true }
-          m.handshakes.where("user_id != ?", current_user.id).each do |h|
-            @catching_up_with << User.find_by_id(h.user_id)
-          end
-        end
-      end
-    end
-
-    current_user.meetings.where(created_at: (Time.now - 10.minutes)..Time.now).each do |m|
-      others = m.handshakes.where("user_id != ?", current_user.id)
-      others.where(validated: false).each do |h|
-        @invited << User.find_by_id(h.user_id)
-      end
-
-      m.handshakes.where(user_id: current_user.id, validated: false).each do |h|
-        @invited_by << { users: m.users.where("user_id != ?", current_user.id), 
-                             handshake_id: h.id }
-      end
-    end
-
-    # for invited_by: maps the users and gets the first one if its a group meeting
-    @around_me = nearbys - @catching_up_with - @invited - @invited_by.map{ |e| e[:users][0] }
-
-  end
-
-
-  def update_page3
-    # puts("THIS IS MAD!!!!!!!!!!")
-    # the map is used to only send the id and name of the contacts (excludes the remember_token!!)
-    @around_me = current_user.nearbys(0.03).map { |e| e.id_and_name }
-    @pending = []
-    @to_confirm = []
-    current_user.meetings.each do |m|
-      m.handshakes.each do |h|
-        if (!h.validated)
-          if (h.user_id != current_user.id)
-            @pending << User.find_by_id(h.user_id).id_and_name
-          else #h.user_id == current_user.id
-            @to_confirm << { users: m.users.where("user_id != ?", current_user.id).map { |e| e.id_and_name }, 
-                             handshake_id: h.id }
-          end
-        end
-      end
-    end
-    render json: { around_me: @around_me, pending: @pending, to_confirm: @to_confirm, user_id: current_user.id }  
-  end
-
-  def update_page2
-    @around_me = current_user.nearbys(0.03)
-    @pending = []
-    @to_confirm = []
-    current_user.meetings.each do |m|
-      m.handshakes.each do |h|
-        if (!h.validated)
-          if (h.user_id != current_user.id)
-            @pending << User.find_by_id(h.user_id)
-          else #h.user_id == current_user.id
-            @to_confirm << { users: m.users.where("user_id != ?", current_user.id), 
-                             handshake_id: h.id }
-          end
-        end
-      end
-    end
-
-    # current_user.meetings.each do |m|
-    #   m.handshakes.each do |h|
-    #     if (!h.validated)
-    #       if (h.user_id != current_user.id)
-    #         @invited << User.find_by_id(h.user_id)
-    #       else #h.user_id == current_user.id
-    #         @invited_by << { users: m.users.where("user_id != ?", current_user.id), 
-    #                          handshake_id: h.id }
-    #       end
-    #     else #h.validated
-    #       if (h.user_id != current_user.id) #TODO: add date < 10 min
-    #         @catching_up_with << User.find_by_id(h.user_id)
-    #       end
-    #     end
-    #   end
-    # end
-
-    # sign_in current_user
     respond_to do |format|
       format.js
     end

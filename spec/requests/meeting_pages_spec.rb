@@ -80,8 +80,10 @@ describe "Meeting Pages", js: true do
 
       it { find('#around_me_list').should_not have_selector('li') }
     end
-
-    
-
   end
+
+  describe "edit" do
+    
+  end
+  
 end

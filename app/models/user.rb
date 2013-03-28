@@ -70,6 +70,12 @@ class User < ActiveRecord::Base
     { id: self.id, name: self.name }
   end
 
+  def update_position(latitude, longitude)
+    self.update_attributes(latitude:  latitude,
+                           longitude: longitude, 
+                           location_time: Time.now)
+  end
+
   def create_remember_token
     done = false
     until done do 

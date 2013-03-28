@@ -17,6 +17,12 @@ gem 'gon'
 gem 'geocoder'
 gem 'pusher'
 
+# gem 'foursquare2'
+# foursquare:
+gem "json"
+gem "typhoeus"
+gem "quimby"
+
 group :development, :test do
   gem 'rspec-rails'
 end

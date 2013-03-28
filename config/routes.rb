@@ -13,7 +13,8 @@ Catchup::Application.routes.draw do
   end
   resources :sessions, only: [:new, :create, :destroy]
   resources :infos,    only: [:new, :create, :destroy]
-
+  resources :notes
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
   root :to => 'static_pages#start'

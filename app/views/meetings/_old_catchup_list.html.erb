@@ -1,0 +1,28 @@
+<% unless @old_invited_by.blank? && @old_invited.blank? %>
+	<div data-role="collapsible" id="old_catchup_list">
+	  <h3>Pending</h3>
+	  <ul data-role="listview" id="around_me_list" data-inset="true"> 
+			<% unless @old_invited_by.blank? %>
+				<% @old_invited_by.each do |item| %>
+				  <li data-theme="e" data-icon="plus" id="invited_by">
+			  	<!-- here I use the first person's name in case of a group catchup -->
+				    <%= link_to item[:users][0].name, 
+				    				user_confirm_meeting_path(current_user, 
+				    				handshake_id: item[:handshake_id]), 
+								    data: { confirm: "Confirming?" }, 
+								    remote: true
+								     %>
+				  </li>
+				<% end %>
+			<% end %>
+
+			<% unless @old_invited.blank? %>
+				<% @old_invited.each do |contact| %>
+				  <li data-theme="e" id="invited">
+				    <%= contact.name %>
+				  </li>
+				<% end %>
+			<% end %>
+		</ul>
+	</div>	
+<% end %>

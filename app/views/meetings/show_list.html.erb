@@ -8,11 +8,11 @@
 <% end %>
 RENCENT MEETINGS:
 <div data-role="content">
-  <% if @user_list.any? %>
+  <% if @list.any? %>
     <ul data-role="listview" data-inset="true" >
-      <% @user_list.each do |contact| %>
+      <% @list.each do |item| %>
         <li>
-          <%= link_to contact.name, user_path(contact) %>
+          <%= link_to item[:user].name, user_meeting_path(current_user, item[:meeting]) %>
         </li>
       <% end %>
 
