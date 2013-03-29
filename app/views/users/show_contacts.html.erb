@@ -19,11 +19,3 @@
 </div>
 
 <%= render :partial => 'layouts/footer', :locals => {:footer_tab => "contacts"} %>
-
-<script type="text/javascript">
-
-  $(document).on('pageshow', '#user_show_contacts_page', function (event) {
-    clearInterval(getListDataId);
-  });
-
-</script>
