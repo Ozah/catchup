@@ -84,11 +84,12 @@ class MeetingsController < ApplicationController
   end
 
   def show_map
-    markers = []
+    @markers = []
     current_user.meetings.each do |meeting|
-      markers << {lat: meeting.latitude, lng: meeting.longitude, description: "woohoo"}
+      user = meeting.users.where("user_id != ?", current_user.id)[0]  
+      @markers << { lat: meeting.latitude, lng: meeting.longitude, name: user.name }
     end
-    gon.markers = markers
+    gon.markers = @markers
   end
 
   def update_position
@@ -103,6 +104,21 @@ class MeetingsController < ApplicationController
     respond_to do |format|
       format.js
     end
+  end
+
+  def get_many_markers
+    @markers = []
+    current_user.meetings.each do |meeting|
+      user = meeting.users.where("user_id != ?", current_user.id)[0]  
+      @markers << { lat: meeting.latitude, lng: meeting.longitude, name: user.name }
+    end 
+    render json: { markers: @markers }
+  end
+
+  def get_single_marker
+    meeting = Meeting.find_by_id(params[:meeting_id])
+    @marker = { lat: meeting.latitude, lng: meeting.longitude, name: user.name }
+    render json: { marker: @marker }
   end
 
 end

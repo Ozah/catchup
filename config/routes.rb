@@ -27,6 +27,8 @@ Catchup::Application.routes.draw do
   match '/new',       to: "static_pages#new_catchup"
   match '/contacts',  to: "users#show_contacts"
   match '/help',      to: "static_pages#help"
+  match '/get_many_markers', to: "meetings#get_many_markers"
+  match '/get_single_marker', to: "meetings#get_single_marker"
 
 
 

@@ -9,26 +9,30 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
   <%= include_gon %>
-  <%= javascript_include_tag "http://maps.google.com/maps/api/js?sensor=true" %>
-  <%= javascript_include_tag "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/styledmarker/src/StyledMarker.js" %>
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
 
   <%= stylesheet_link_tag "https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.3.0/jquery.mobile-1.3.0.min.css", :media => "all" %>
   <%= javascript_include_tag "http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.js" %>
-  <%= javascript_include_tag "http://js.pusher.com/2.0/pusher.min.js" %>
-  <%= javascript_include_tag "ui_map/min/jquery.ui.map.min.js" %>
-  <%= javascript_include_tag "ui_map/min/jquery.ui.map.overlays.min.js" %>
-  <%= javascript_include_tag "ui_map/min/jquery.ui.map.services.min.js" %>
-  <%= javascript_include_tag "ui_map/jquery.ui.map.extensions.js" %>
+  
+  <!-- Google maps stuff -->
+  <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBYIeys4U0Yx8ac2dUQ9uwJzEgvbyN7WbM&sensor=true" %>
+  <%= javascript_include_tag "/assets/markerwithlabel.js" %>
+  <%#= javascript_include_tag "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/styledmarker/src/StyledMarker.js" %>
+  <%#= javascript_include_tag "ui_map/min/jquery.ui.map.min.js" %>
+  <%#= javascript_include_tag "ui_map/min/jquery.ui.map.overlays.min.js" %>
+  <%#= javascript_include_tag "ui_map/min/jquery.ui.map.services.min.js" %>
+  <%#= javascript_include_tag "ui_map/jquery.ui.map.extensions.js" %>
+  <!-- End of google maps stuff -->
+
   <%= javascript_include_tag "my.js" %>
 
   <%= csrf_meta_tags %>
 
-  <!-- Use only if you want to cache all visited pages -->
+  <!-- Use only if you want to cache all visited pages 
   <script>
     $.mobile.page.prototype.options.domCache = true;
-  </script>
+  </script> -->
 
 </head>
 <body>

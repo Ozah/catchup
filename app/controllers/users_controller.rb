@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:show, :edit, :update]
+  before_filter :current_user_or_contact, only: :show
   before_filter :correct_user,   only: [:edit, :update]
   before_filter :signed_in_user_filter, only: [:new, :create]
 
@@ -78,6 +79,13 @@ class UsersController < ApplicationController
 
 
   private
+
+    def current_user_or_contact
+      @user = User.find(params[:id])
+      unless current_user?(@user) || current_user.has_contact?(@user)
+        redirect_to root_path
+      end  
+    end
 
     def correct_user
       @user = User.find(params[:id])

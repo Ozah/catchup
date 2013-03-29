@@ -33,25 +33,32 @@ describe "User pages" do
       it { should have_link("delete", href: info_path(info2.id)) }
     end
 
-    describe "profile page of another user" do
+    describe "profile page of a user not in contacts" do
       let(:user2) { FactoryGirl.create(:user) }
       let!(:info3) { FactoryGirl.create(:info, user: user2, content: "Foo") }
       let!(:info4) { FactoryGirl.create(:info, user: user2, content: "Bar") }
 
-      before do
-        visit user_path(user2)
+      before { get user_path(user2) }
+      specify { response.should redirect_to(root_path) }
+
+      describe "profile page of a user in contacts" do
+        before do
+          user.add_contact!(user2)
+          visit user_path(user2)
+        end
+        it { should have_selector('h1',    text: user2.name) }
+        it { should_not have_link("Edit profile") }
+        it { should_not have_link("Add link") }
+
+        describe "infos" do
+          it { should have_content(info3.content) }
+          it { should have_content(info4.content) }
+          it { should_not have_link("delete", href: info_path(info1.id)) }
+          it { should_not have_link("delete", href: info_path(info2.id)) }
+        end
+
       end
 
-      it { should have_selector('h1',    text: user2.name) }
-      it { should_not have_link("Edit profile") }
-      it { should_not have_link("Add link") }
-
-      describe "infos" do
-        it { should have_content(info3.content) }
-        it { should have_content(info4.content) }
-        it { should_not have_link("delete", href: info_path(info1.id)) }
-        it { should_not have_link("delete", href: info_path(info2.id)) }
-      end
     end
 
   end

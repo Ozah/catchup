@@ -12,16 +12,22 @@
   }
 }
 
-#main-footer {
-position: absolute;
-bottom: 0px;
-width: 100%;
-}
-
 #sign_in_button {
   position: absolute;
   bottom: 100px;
 }
+
+.map_labels {
+     color: black;
+     background-color: white;
+     font-family: "Lucida Grande", "Arial", sans-serif;
+     font-size: 12px;
+     font-weight: bold;
+     text-align: center;
+     //width: 80px;     
+     //border: 2px solid black;
+     white-space: nowrap;
+   }
 
 #forgot_password_link{
   position: absolute;
