@@ -34,11 +34,5 @@ Catchup::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
-
-  require 'pusher'
-
-  Pusher.app_id = 40250
-  Pusher.key = 'ce1f2ad2aa9e36bd3f97'
-  Pusher.secret = '170f3acdbbbb2a303061'
   
 end

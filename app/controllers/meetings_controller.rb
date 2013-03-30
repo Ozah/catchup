@@ -89,7 +89,6 @@ class MeetingsController < ApplicationController
       user = meeting.users.where("user_id != ?", current_user.id)[0]  
       @markers << { lat: meeting.latitude, lng: meeting.longitude, name: user.name }
     end
-    gon.markers = @markers
   end
 
   def update_position
