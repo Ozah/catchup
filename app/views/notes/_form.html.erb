@@ -1,0 +1,9 @@
+<!-- THis is not working.. when I submit, 2 requests (html and js) get sent to the controller -->
+<%= form_for Note.new, remote: true do |f| %>
+	<%= render 'shared/error_messages', object: f.object %>
+  <%= f.text_area :content, placeholder: "New note" %>
+  <%#= f.hidden_field :meeting_id, value: meeting_id %>
+  <%= f.submit "Add" %>
+<% end %>
+
+

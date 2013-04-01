@@ -9,7 +9,7 @@
   <% if current_user?(info.user) %>
     <%= link_to "delete", info, method: :delete,
                 data: { confirm: "You sure?" },
-                title: info.content,
+                title: "delete",
                 "data-position-to" => "window"
     %>
   <% end %>

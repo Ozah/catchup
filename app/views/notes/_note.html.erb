@@ -1,0 +1,15 @@
+<li <%= "id=note_#{note.id}" %>>
+	<a href="">
+  	<p><%= note.user.name %></p>
+  	<h3><%= note.content %> </h3>
+  	<p class="ui-li-aside ui-li-desc"><%= note.created_at.strftime("%d/%m/%Y %R") %></p>
+  </a>
+  <% if current_user?(note.user) %>
+    <%= link_to "delete", note, method: :delete,
+                data: { confirm: "You sure?" },
+                title: "delete",
+                "data-position-to" => "window",
+                remote: true
+    %>
+  <% end %>
+</li>

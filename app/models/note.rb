@@ -11,7 +11,7 @@
 #
 
 class Note < ActiveRecord::Base
-  attr_accessible :content, :user_id
+  attr_accessible :content, :user_id, :meeting_id
 
   belongs_to :user
   belongs_to :meeting

@@ -1,4 +1,3 @@
-
 $(document).bind("mobileinit", function() { // We change default values
     $.mobile.defaultPageTransition = "none";
 });

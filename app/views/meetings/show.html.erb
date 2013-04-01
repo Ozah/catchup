@@ -11,23 +11,36 @@
 <p><%= "Created at: #{@meeting.created_at}" %></p>
 <p>Location:</p>
 <p><%= "Latitude: #{@meeting.latitude}, longitude: #{@meeting.longitude}" %></p>
-<p> </p>
-<p></p>
-<div data-role="content">
-  Notes:
-  <% unless @meeting.notes.blank? %>
-    <ul data-role="listview" data-inset="true" data-split-icon="delete" data-split-theme="a">
-      <%= render @notes %>
-    </ul>
-  <% end %>
-  
-  <%= link_to "Edit Note", edit_note_path,
-              "data-role" => "button",
-              "data-inline" => "true",
-              "data-icon" => "plus",
-              "data-iconpos" => "notext",
-              "data-theme" => "a" %>
-  
-</div>
+<% unless @meeting.notes.blank? %>
+  <ul data-role="listview" data-inset="true"  id="notes_list" data-split-icon="delete" data-split-theme="a">
+    <%= render @meeting.notes %>
+  </ul>
+<% end %>
+
+<%#= render :partial => 'notes/form', :locals => { :meeting_id => @meeting.id }  %>
+
+<!-- TODO create a text field and a submit button linked to an ajax call.. -->
+<textarea name="textarea" id="note_textarea" placeholder="New note"></textarea>
+<button id="new_note_button">Add</button>
 
 <%= render :partial => 'layouts/footer', :locals => { :footer_tab => 'list' } %>
+
+<script type="text/javascript">
+$("#new_note_button").bind( "click", function(event, ui) {
+  var text = $("#note_textarea");
+  $("#new_note_info").html("");
+  if(text.val() != "") {
+    $.ajax("<%= notes_path %>", {  
+            type: 'POST',
+            data: { content: $("#note_textarea").val(), 
+                    meeting_id: <%= @meeting.id %> },
+            success: function(data) { 
+              // alert(data) 
+            },
+            error: function() { alert('error in adding note!') }
+        });
+  } else {
+    alert("A note can not be blank");
+  }
+});
+</script>
