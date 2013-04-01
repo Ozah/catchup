@@ -10,7 +10,7 @@
           "data-icon" => "refresh", "data-role" => "button", "class" => "ui-btn-right" %>
   <h1>Catch up</h1>
 <% end %>
-
+<p id="position-info"></p>
 <div id="new_catchup_list">
   <ul data-role="listview" id="around_me_list" data-inset="true"> 
   </ul>
@@ -22,8 +22,9 @@
 
 <script type="text/javascript">
   var getListDataId;
-
+  var info = $("#position-info");
   $(document).on('pageshow', '#new_meeting_page', function (event) {
+    info.html("");
     // updates the current locatin of the user
     getPosition(sendGeoLocPosition);
     // updates the list every few seconds
@@ -59,7 +60,48 @@
   }
 
   var refreshCatchupPage = function() {
+    info.html("");
+    // updates the current locatin of the user
+    getPosition(sendGeoLocPosition);
     getListData();  
   }
+
+  function getPosition(sendGeoLocPosition) {
+  if ( navigator.geolocation ) {
+    //alert("geolocalisation supported");
+    navigator.geolocation.getCurrentPosition( 
+        sendGeoLocPosition, 
+        errorCallback,
+        {
+          enableHighAccuracy : true,
+          timeout : 10000,
+          maximumAge : 60000 //60 seconds
+        }
+      );
+  } else {
+    alert("geolocalisation not supported");
+  // geolocalisation not supported
+  }
+}
+
+var errorCallback = function(error){
+  // alert(error);
+  switch(error.code)
+  {
+    case error.PERMISSION_DENIED:
+      info.html("Request for geolocation denied.");
+      break;
+    case error.POSITION_UNAVAILABLE:
+      info.html("Location information is unavailable.");
+      break;
+    case error.TIMEOUT:
+      info.html("The request to get user location timed out.");
+      break;
+    case error.UNKNOWN_ERROR:
+      info.html("An unknown error occurred.");
+      break;
+  }  
+
+}
 
 </script>

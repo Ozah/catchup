@@ -13,6 +13,8 @@ class MeetingsController < ApplicationController
   end
 
   def edit
+    @meeting = Meeting.find_by_id(params[:id])
+    @other_users = @meeting.users.where("user_id != ?", current_user.id) 
   end
 
   def show

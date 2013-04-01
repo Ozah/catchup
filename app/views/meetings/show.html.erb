@@ -1,5 +1,5 @@
 <% content_for :page_div do %>
-  <div class="page" data-role="page" data-fullscreen="true" id="meeting_edit_page">
+  <div class="page" data-role="page" data-fullscreen="true" id="meeting_show_page">
 <% end %>
 <% content_for :heading do %>
   <%= link_to "Back", "#", "data-rel" => "back", "data-icon" => "back",
@@ -24,7 +24,7 @@
   <%= link_to "Edit Note", edit_note_path,
               "data-role" => "button",
               "data-inline" => "true",
-              "data-icon" => "gear",
+              "data-icon" => "plus",
               "data-iconpos" => "notext",
               "data-theme" => "a" %>
   

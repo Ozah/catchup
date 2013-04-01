@@ -1,0 +1,33 @@
+<% content_for :page_div do %>
+  <div class="page" data-role="page" data-fullscreen="true" id="meeting_edit_page">
+<% end %>
+<% content_for :heading do %>
+  <%= link_to "Back", "#", "data-rel" => "back", "data-icon" => "back",
+                "data-role" => "button", "class" => "ui-btn-left" %>
+    
+  <h1>Meeting with <%= @other_users[0].name %></h1>
+<% end %>
+
+<p><%= "Created at: #{@meeting.created_at}" %></p>
+<p>Location:</p>
+<p><%= "Latitude: #{@meeting.latitude}, longitude: #{@meeting.longitude}" %></p>
+<p> </p>
+<p></p>
+<div data-role="content">
+  Notes:
+  <% unless @meeting.notes.blank? %>
+    <ul data-role="listview" data-inset="true" data-split-icon="delete" data-split-theme="a">
+      <%= render @notes %>
+    </ul>
+  <% end %>
+  
+  <%= link_to "Edit Note", edit_note_path,
+              "data-role" => "button",
+              "data-inline" => "true",
+              "data-icon" => "gear",
+              "data-iconpos" => "notext",
+              "data-theme" => "a" %>
+  
+</div>
+
+<%= render :partial => 'layouts/footer', :locals => { :footer_tab => 'list' } %>
