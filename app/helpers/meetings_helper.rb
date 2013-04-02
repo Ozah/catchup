@@ -64,7 +64,7 @@ module MeetingsHelper
     foursquare = Foursquare::Base.new("F2VJIIH4XZWMXBMKT1QG55XNXTVZ3SRDP5USQC5IQ2POIANE", "MPURINUKRFOEDVGXLRBG23RBW3KNHA1IBN2PWQWQLBJPW5UO")
     @venues = foursquare.venues.search(
                     ll: "#{latitude},#{longitude}", 
-                    intent: 'browse', 
+                    # intent: 'browse', 
                     radius: '1000')
 
   end

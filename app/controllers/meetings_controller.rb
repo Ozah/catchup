@@ -75,7 +75,7 @@ class MeetingsController < ApplicationController
 
   def show_list
     @list = []
-    current_user.meetings.each do |m|
+    current_user.meetings.order("created_at").each do |m|
       m.handshakes.where("validated = true").where("user_id != ?", current_user.id).each do |h|
         @list << { user: User.find_by_id(h.user_id), meeting: m }
       end
