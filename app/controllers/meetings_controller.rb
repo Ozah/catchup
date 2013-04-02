@@ -99,6 +99,23 @@ class MeetingsController < ApplicationController
     render :nothing => true
   end
 
+  def update_location_list
+    # puts("update_location_list: #{params}")
+    @meeting = Meeting.find_by_id params[:meeting_id]
+    get_foursquare_venues(@meeting.latitude, @meeting.longitude)
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def update_location
+    @meeting = Meeting.find_by_id params[:meeting_id]
+    @meeting.update_attribute(:location, params[:venue])
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def update_page
     update_list
 

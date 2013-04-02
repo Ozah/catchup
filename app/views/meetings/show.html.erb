@@ -8,9 +8,15 @@
   <h1>Meeting with <%= @other_users[0].name %></h1>
 <% end %>
 
-<p><%= "Created at: #{@meeting.created_at}" %></p>
-<p>Location:</p>
+<p><%= "#{@meeting.created_at.strftime("%d/%m/%Y %R")}" %></p>
+
+<p id="meeting_location"><%= @meeting.location %></p>
+
+<button id="meeting_location_button">Edit location (Foursquare)</button>
+<ul id="meeting_location_list" data-role="listview" data-inset="true">
+</ul>
 <p><%= "Latitude: #{@meeting.latitude}, longitude: #{@meeting.longitude}" %></p>
+
 <% unless @meeting.notes.blank? %>
   <ul data-role="listview" data-inset="true"  id="notes_list" data-split-icon="delete" data-split-theme="a">
     <%= render @meeting.notes %>
@@ -19,28 +25,38 @@
 
 <%#= render :partial => 'notes/form', :locals => { :meeting_id => @meeting.id }  %>
 
-<!-- TODO create a text field and a submit button linked to an ajax call.. -->
 <textarea name="textarea" id="note_textarea" placeholder="New note"></textarea>
 <button id="new_note_button">Add</button>
 
 <%= render :partial => 'layouts/footer', :locals => { :footer_tab => 'list' } %>
 
 <script type="text/javascript">
-$("#new_note_button").bind( "click", function(event, ui) {
-  var text = $("#note_textarea");
-  $("#new_note_info").html("");
-  if(text.val() != "") {
-    $.ajax("<%= notes_path %>", {  
-            type: 'POST',
-            data: { content: $("#note_textarea").val(), 
-                    meeting_id: <%= @meeting.id %> },
-            success: function(data) { 
-              // alert(data) 
-            },
-            error: function() { alert('error in adding note!') }
-        });
-  } else {
-    alert("A note can not be blank");
-  }
-});
+  $("#meeting_location_button").bind( "click", function(event, ui) {
+    $.ajax("<%= user_update_location_list_path(current_user) %>", {  
+        // type: 'POST',
+        data: { meeting_id: <%= @meeting.id %> },
+        success: function(data) { 
+          // alert(data) 
+        },
+        error: function() { alert('error in updating location list!') }
+    });
+  });
+
+  $("#new_note_button").bind( "click", function(event, ui) {
+    var text = $("#note_textarea");
+    $("#new_note_info").html("");
+    if(text.val() != "") {
+      $.ajax("<%= notes_path %>", {  
+              type: 'POST',
+              data: { content: $("#note_textarea").val(), 
+                      meeting_id: <%= @meeting.id %> },
+              success: function(data) { 
+                // alert(data) 
+              },
+              error: function() { alert('error in adding note!') }
+          });
+    } else {
+      alert("A note can not be blank");
+    }
+  });
 </script>

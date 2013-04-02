@@ -1,0 +1,6 @@
+<% venues["nearby"].each do |venue| %>
+	<li>
+		<%= link_to venue.name, update_location_path(venue: venue.name, meeting_id: meeting.id), remote: true %>
+		<%#= venue.name %>
+	</li>
+<% end %>

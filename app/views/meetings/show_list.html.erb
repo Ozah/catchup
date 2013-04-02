@@ -4,20 +4,31 @@
 <% content_for :heading do %>
   <%= link_to "Map", user_show_map_path(current_user), "data-icon" => "grid",
               "data-role" => "button", "class" => "ui-btn-right" %>
-  <h1>List</h1>
+  <h1>MEETINGS</h1>
 <% end %>
-RENCENT MEETINGS:
-<div data-role="content">
-  <% if @list.any? %>
-    <ul data-role="listview" data-inset="true" >
-      <% @list.each do |item| %>
-        <li>
-          <%= link_to item[:user].name, user_meeting_path(current_user, item[:meeting]) %>
-        </li>
-      <% end %>
 
-    </ul>
-  <% end %>
-</div>
+<% if @list.any? %>
+  <ul data-role="listview" data-inset="true" id="show_list">
+    <% @list.each do |item| %>
+      <li>
+        <a href=<%= user_meeting_path(current_user, item[:meeting]) %>>
+          <h3><%= item[:user].name %></h3>
+          <p><%= item[:meeting].location %></p>
+          <p class="ui-li-aside ui-li-desc"><%= item[:meeting].created_at.strftime("%d/%m/%Y %R") %></p>
+        </a>
+        <%#= link_to item[:user].name, user_meeting_path(current_user, item[:meeting]) %>
+      </li>
+    <% end %>
+
+  </ul>
+<% end %>
+
 
 <%= render :partial => 'layouts/footer', :locals => {:footer_tab => "list"} %>
+
+<script type="text/javascript">
+  var getListDataId;
+  $(document).on('pageshow', '#show_list_page', function (event) {
+    $('#show_list').listview('refresh');
+  });
+</script>
