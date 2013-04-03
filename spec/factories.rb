@@ -58,8 +58,8 @@ FactoryGirl.define do
 
   factory :venue do
     sequence(:name)  { |n| "Venue #{n}" }
-    sequence(:latitude)  { |n| 2.4  }
-    sequence(:longitude) { |n| 48.4  }   
+    sequence(:latitude)  { |n| 2.4 + n/100  }
+    sequence(:longitude) { |n| 48.4 + n/100 }   
   end
 
 end
