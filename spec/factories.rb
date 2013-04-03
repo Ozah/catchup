@@ -50,6 +50,16 @@ FactoryGirl.define do
   factory :meeting do
     latitude  2.441416
     longitude 48.849325
-    location "Ircam"
   end
+
+  factory :note do
+    sequence(:content)  { |n| "Content #{n}" }
+  end
+
+  factory :venue do
+    sequence(:name)  { |n| "Venue #{n}" }
+    sequence(:latitude)  { |n| 2.4  }
+    sequence(:longitude) { |n| 48.4  }   
+  end
+
 end

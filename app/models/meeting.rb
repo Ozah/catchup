@@ -7,7 +7,7 @@
 #  longitude  :float
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  location   :string(255)
+#  venue_id   :integer
 #
 
 class Meeting < ActiveRecord::Base
@@ -17,6 +17,8 @@ class Meeting < ActiveRecord::Base
 
   has_many :handshakes
   has_many :users, through: :handshakes
-  has_many :notes
+  has_many :notes, dependent: :destroy
+  belongs_to :venue
 
+  validates_presence_of :latitude, :longitude
 end

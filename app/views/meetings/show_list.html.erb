@@ -13,8 +13,12 @@
       <li>
         <a href=<%= user_meeting_path(current_user, item[:meeting]) %>>
           <h3><%= item[:user].name %></h3>
-          <p><%= item[:meeting].location %></p>
-          <p class="ui-li-aside ui-li-desc"><%= item[:meeting].created_at.strftime("%d/%m/%Y %R") %></p>
+          <p>
+            <% item[:meeting].notes.each do |note| %>   
+              <%= note.content %>
+            <% end %>
+          </p>
+          <p class="ui-li-aside ui-li-desc"><%= item[:meeting].created_at.strftime("%d/%m/%Y %R") %><br/><br/><strong><%= item[:meeting].venue.name unless item[:meeting].venue.blank? %></strong></p>
         </a>
         <%#= link_to item[:user].name, user_meeting_path(current_user, item[:meeting]) %>
       </li>

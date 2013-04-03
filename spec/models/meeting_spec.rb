@@ -7,7 +7,7 @@
 #  longitude  :float
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  location   :string(255)
+#  venue_id   :integer
 #
 
 require 'spec_helper'
@@ -27,7 +27,9 @@ describe Meeting do
 
     it { should respond_to(:users) }
     it { should respond_to(:notes) }   
-    it { should respond_to(:location) }
+    it { should respond_to(:latitude) }
+    it { should respond_to(:longitude) }
+    it { should respond_to(:venue) }
     its(:users) { should include(user1) }
     its(:users) { should include(user2) }
     specify { user1.meetings.should include(meeting) }

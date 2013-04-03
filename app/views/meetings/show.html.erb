@@ -9,19 +9,16 @@
 <% end %>
 
 <p><%= "#{@meeting.created_at.strftime("%d/%m/%Y %R")}" %></p>
+<p id="meeting_venue_name"><%= @meeting.venue.name unless @meeting.venue.blank? %></p>
 
-<p id="meeting_location"><%= @meeting.location %></p>
-
-<button id="meeting_location_button">Edit location (Foursquare)</button>
-<ul id="meeting_location_list" data-role="listview" data-inset="true">
+<button id="venues_search_button">Edit venue (Foursquare)</button>
+<ul id="meeting_venues_list" data-role="listview" data-inset="true">
 </ul>
 <p><%= "Latitude: #{@meeting.latitude}, longitude: #{@meeting.longitude}" %></p>
 
-<% unless @meeting.notes.blank? %>
-  <ul data-role="listview" data-inset="true"  id="notes_list" data-split-icon="delete" data-split-theme="a">
+<ul data-role="listview" data-inset="true"  id="notes_list" data-split-icon="delete" data-split-theme="a">
     <%= render @meeting.notes %>
-  </ul>
-<% end %>
+</ul>
 
 <%#= render :partial => 'notes/form', :locals => { :meeting_id => @meeting.id }  %>
 
@@ -31,8 +28,8 @@
 <%= render :partial => 'layouts/footer', :locals => { :footer_tab => 'list' } %>
 
 <script type="text/javascript">
-  $("#meeting_location_button").bind( "click", function(event, ui) {
-    $.ajax("<%= user_update_location_list_path(current_user) %>", {  
+  $("#venues_search_button").bind( "click", function(event, ui) {
+    $.ajax("<%= find_nearby_venues_path %>", {  
         // type: 'POST',
         data: { meeting_id: <%= @meeting.id %> },
         success: function(data) { 

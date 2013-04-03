@@ -3,4 +3,5 @@ class ApplicationController < ActionController::Base
   #helpers are by default available views but not in controllers
   include SessionsHelper
   include MeetingsHelper
+  include VenuesHelper
 end

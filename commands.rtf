@@ -43,6 +43,22 @@ rails g integration_test note_pages\
 https://api.foursquare.com/v2/venues/search?&ll=48.849117,2.4420522&intent=browse&radius=100&client_id=F2VJIIH4XZWMXBMKT1QG55XNXTVZ3SRDP5USQC5IQ2POIANE&client_secret=MPURINUKRFOEDVGXLRBG23RBW3KNHA1IBN2PWQWQLBJPW5UO&v=20110101\
 \
 rails generate migration add_location_to_meetings location:string\
-rails generate controller Maps --no-test-framework\
-heroku labs:enable user-env-compile -a catchup\
+\
+rails generate model Venue response:string\
+rails generate controller Venues\
+rails generate migration add_venue_id_to_meetings venue_id:integer\
+rails generate model Place user_id:integer venue_id:integer\
+\pard\pardeftab720
+
+\f1 \cf0 \cb3 rails g migration change_foursquare_id_format_in_venues
+\f0 \cf2 \cb3 \
+rails g migration add_latitude_and_longitude_to_venues latitude:integer longitude:integer\
+
+\f1 \cf0 \cb3 rails g migration remove_location_from_meetings location:string\
+rails g migration change_
+\f0 \cf2 \cb3 latitude_and_longitude
+\f1 \cf0 \cb3 _format_in_venues
+\f0 \cf2 \cb3 \
+\
+\
 }

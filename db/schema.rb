@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130328150113) do
+ActiveRecord::Schema.define(:version => 20130403154707) do
 
   create_table "handshakes", :force => true do |t|
     t.integer  "user_id"
@@ -39,13 +39,20 @@ ActiveRecord::Schema.define(:version => 20130328150113) do
     t.float    "longitude"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.string   "location"
+    t.integer  "venue_id"
   end
 
   create_table "notes", :force => true do |t|
     t.string   "content"
     t.integer  "user_id"
     t.integer  "meeting_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "places", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "venue_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -77,5 +84,18 @@ ActiveRecord::Schema.define(:version => 20130328150113) do
 
   add_index "users", ["email"], :name => "index_users_on_email"
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
+
+  create_table "venues", :force => true do |t|
+    t.string   "foursquare_id"
+    t.string   "name"
+    t.text     "location"
+    t.text     "icon"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.float    "latitude"
+    t.float    "longitude"
+  end
+
+  add_index "venues", ["foursquare_id"], :name => "index_venues_on_foursquare_id"
 
 end

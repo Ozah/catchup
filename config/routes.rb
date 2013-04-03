@@ -7,7 +7,7 @@ Catchup::Application.routes.draw do
     match '/create_with_email',    to: "meetings#create_with_email"
     match '/new_with_contact',     to: "meetings#new_with_contact"
     match '/update_catch_up_page', to: "meetings#update_page"
-    match '/update_position',      to: "meetings#update_position"
+    match '/update_user_position',      to: "meetings#update_user_position"
     match '/update_location_list', to: "meetings#update_location_list"
     match '/confirm_meeting',      to: "meetings#confirm"
     match '/manual_entry',         to: "meetings#manual"
@@ -15,6 +15,7 @@ Catchup::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :infos,    only: [:new, :create, :destroy]
   resources :notes
+  resources :venues
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -30,7 +31,10 @@ Catchup::Application.routes.draw do
   match '/help',      to: "static_pages#help"
   match '/get_many_markers', to: "meetings#get_many_markers"
   match '/get_single_marker', to: "meetings#get_single_marker"
-  match '/update_location',   to: "meetings#update_location"
+
+  match '/find_nearby_venues', to: "venues#find_nearbys"
+
+  match '/update_venue',   to: "meetings#update_venue"
 
 
 

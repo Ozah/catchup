@@ -48,7 +48,7 @@
 
   var sendGeoLocPosition = function(position) {
       // $.ajax("<%= user_update_catch_up_page_path(current_user) %>", {
-      $.ajax("<%= user_update_position_path(current_user) %>", {  
+      $.ajax("<%= user_update_user_position_path(current_user) %>", {  
           type: 'POST',
           data: { latitude: position.coords.latitude, 
                   longitude: position.coords.longitude },

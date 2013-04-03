@@ -28,6 +28,8 @@ class User < ActiveRecord::Base
   has_many :contacts, through: :relationships
   has_many :handshakes
   has_many :meetings, through: :handshakes
+  has_many :places
+  has_many :venues, through: :places
 
   
   # Ensuring email uniqueness by downcasing the email attribute.

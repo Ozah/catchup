@@ -1,5 +1,5 @@
 class MeetingsController < ApplicationController
-  #GET /users/:user_id/meetings/new - new_meetings_user_path - return an HTML form for creating a new meeting belonging to a specific user
+  #GET /users/:user_id/meetings/new - new_meetings_user_path - returns an HTML form for creating a new meeting belonging to a specific user
   def new
     #@meeting = Meeting.new
     update_old_list
@@ -9,22 +9,36 @@ class MeetingsController < ApplicationController
 
   end
 
+  def new_with_contact
+    @contacts = current_user.contacts
+  end
+
   def manual
   end
 
-  def edit
-    @meeting = Meeting.find_by_id(params[:id])
-    @other_users = @meeting.users.where("user_id != ?", current_user.id) 
-  end
-
   def show
-    # puts("PARAMS-SHOW-MEETING: ")
     @meeting = Meeting.find_by_id(params[:id])
     @other_users = @meeting.users.where("user_id != ?", current_user.id)  
   end
 
-  def new_with_contact
-    @contacts = current_user.contacts
+  def show_list
+    @list = []
+    current_user.meetings.order("created_at").each do |m|
+      m.handshakes.where("validated = true").where("user_id != ?", current_user.id).each do |h|
+        @list << { user: User.find_by_id(h.user_id), meeting: m }
+      end
+    end
+
+    #to get the elements from most recent
+    @list.reverse!
+  end
+
+  def show_map
+    @markers = []
+    current_user.meetings.each do |meeting|
+      user = meeting.users.where("user_id != ?", current_user.id)[0]  
+      @markers << { lat: meeting.latitude, lng: meeting.longitude, name: user.name }
+    end
   end
 
   def create_with_email
@@ -73,27 +87,7 @@ class MeetingsController < ApplicationController
     render 'update_page'
   end
 
-  def show_list
-    @list = []
-    current_user.meetings.order("created_at").each do |m|
-      m.handshakes.where("validated = true").where("user_id != ?", current_user.id).each do |h|
-        @list << { user: User.find_by_id(h.user_id), meeting: m }
-      end
-    end
-
-    #to get the elements from most recent
-    @list.reverse!
-  end
-
-  def show_map
-    @markers = []
-    current_user.meetings.each do |meeting|
-      user = meeting.users.where("user_id != ?", current_user.id)[0]  
-      @markers << { lat: meeting.latitude, lng: meeting.longitude, name: user.name }
-    end
-  end
-
-  def update_position
+  def update_user_position
     current_user.update_position(params[:latitude], params[:longitude])
     # puts("BAM!!! longitude = #{params[:longitude]} latitude = #{params[:latitude]}")
     render :nothing => true
@@ -108,9 +102,24 @@ class MeetingsController < ApplicationController
     end
   end
 
-  def update_location
+  def update_venue
+    @venue = Venue.find_by_foursquare_id params[:venue_id] 
+    unless @venue
+      fs_venue = get_foursquare_venue(params[:venue_id])
+      @venue = Venue.create(foursquare_id: fs_venue.id, 
+                           name: fs_venue.name,
+                           location: fs_venue.location,
+                           icon: fs_venue.icon,
+                           latitude: fs_venue.location.lat,
+                           longitude: fs_venue.location.lng)
+    end
     @meeting = Meeting.find_by_id params[:meeting_id]
-    @meeting.update_attribute(:location, params[:venue])
+    @meeting.venue = @venue
+    @meeting.update_attributes(latitude: @venue.location.lat, longitude: @venue.location.lng)
+    @meeting.users.each do |user|
+      user.venues << @venue unless user.venues.include?(@venue)
+    end
+
     respond_to do |format|
       format.js
     end

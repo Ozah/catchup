@@ -34,13 +34,13 @@ describe Note do
 
   it { should be_valid }
 
-  describe "accessible attributes" do
-    it "should not allow access to meeting_id" do
-      expect do
-        Note.new(meeting_id: meeting.id)
-      end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
-    end
-  end
+  # describe "accessible attributes" do
+  #   it "should not allow access to meeting_id" do
+  #     expect do
+  #       Note.new(meeting_id: meeting.id)
+  #     end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+  #   end
+  # end
 
   describe "when user_id is not present" do
     before { @note.user_id = nil }

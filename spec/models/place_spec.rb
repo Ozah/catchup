@@ -1,39 +1,39 @@
 # == Schema Information
 #
-# Table name: relationships
+# Table name: places
 #
 #  id         :integer          not null, primary key
 #  user_id    :integer
-#  contact_id :integer
+#  venue_id   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
 require 'spec_helper'
 
-describe Relationship do
+describe Place do
   let(:user) { FactoryGirl.create(:user) }
-  let(:contact) { FactoryGirl.create(:user) }
-  let(:relationship) { user.relationships.build(contact_id: contact.id) }
+  let(:venue) { FactoryGirl.create(:venue) }
+  let(:place) { user.places.build(venue_id: venue.id) }
 
-  subject { relationship }
+  subject { place }
 
   it { should be_valid }
 
   describe "respond_to methods" do
     it { should respond_to(:user) }
-    it { should respond_to(:contact) }
+    it { should respond_to(:venue) }
     its(:user) { should == user }
-    its(:contact) { should == contact }
+    its(:venue) { should == venue }
   end
 
-  describe "when contact id is not present" do
-    before { relationship.contact_id = nil }
+  describe "when venue id is not present" do
+    before { place.venue_id = nil }
     it { should_not be_valid }
   end
 
   describe "when user id is not present" do
-    before { relationship.user_id = nil }
+    before { place.user_id = nil }
     it { should_not be_valid }
   end
 end
