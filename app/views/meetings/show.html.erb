@@ -5,16 +5,17 @@
   <%= link_to "Back", user_show_list_path(current_user), "data-icon" => "back",
                 "data-role" => "button", "class" => "ui-btn-left" %>
     
-  <h1>Meeting with <%= @other_users[0].name %></h1>
+  <h1><%= @other_users[0].name %></h1>
 <% end %>
 
 <p><%= "#{@meeting.created_at.strftime("%d/%m/%Y %R")}" %></p>
-<p id="meeting_venue_name"><%= @meeting.venue.name unless @meeting.venue.blank? %></p>
 
-<button id="venues_search_button">Edit venue (Foursquare)</button>
+<p id="meeting_venue_name"><strong><%= @meeting.venue.name unless @meeting.venue.blank? %></strong></p>
+
+<button id="venues_search_button" >Edit venue (Foursquare)</button>
+
 <ul id="meeting_venues_list" data-role="listview" data-inset="true">
 </ul>
-<p><%= "Latitude: #{@meeting.latitude}, longitude: #{@meeting.longitude}" %></p>
 
 <ul data-role="listview" data-inset="true"  id="notes_list" data-split-icon="delete" data-split-theme="a">
     <%= render @meeting.notes %>

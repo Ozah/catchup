@@ -137,7 +137,12 @@ class MeetingsController < ApplicationController
     @markers = []
     current_user.meetings.each do |meeting|
       user = meeting.users.where("user_id != ?", current_user.id)[0]  
-      @markers << { lat: meeting.latitude, lng: meeting.longitude, name: user.name }
+      if meeting.venue && !meeting.venue.icon.blank?
+        icon = meeting.venue.icon
+      else
+        icon = nil
+      end
+      @markers << { lat: meeting.latitude, lng: meeting.longitude, name: user.name, icon: icon }
     end 
     render json: { markers: @markers }
   end

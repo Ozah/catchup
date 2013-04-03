@@ -27,12 +27,12 @@
   </ul>
 <% end %>
 
+<script type="text/javascript">
+  $('#show_list_page').on('pageshow', function (event) {
+    $('#show_list').listview('refresh');
+    // alert("show_list_page refreshed")
+  });
+</script>
 
 <%= render :partial => 'layouts/footer', :locals => {:footer_tab => "list"} %>
 
-<script type="text/javascript">
-  var getListDataId;
-  $(document).on('pageshow', '#show_list_page', function (event) {
-    $('#show_list').listview('refresh');
-  });
-</script>

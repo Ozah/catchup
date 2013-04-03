@@ -8,13 +8,7 @@
   <h1>Map </h1>
 <% end %>
 
-<p id="info"></p>
-
-
-<div data-role="content">
-  <div id="map-canvas" style="width: 100%; height: 250px;"></div>
-</div>
-
+<div id="map-canvas" style="width: 100%; height: 250px;"></div>
 
 <script type="text/javascript">
 
@@ -49,6 +43,7 @@
       latlon = new google.maps.LatLng(markers[i].lat, markers[i].lng);
       new google.maps.Marker({
         position: latlon,
+        icon: markers[i].icon,
         map: map
       });
       new MarkerWithLabel({
