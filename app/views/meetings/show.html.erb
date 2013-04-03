@@ -10,6 +10,8 @@
 
 <p><%= "#{@meeting.created_at.strftime("%d/%m/%Y %R")}" %></p>
 
+<div id="meeting-map-canvas" style="width: 100%; height: 250px;"></div>
+
 <p id="meeting_venue_name"><strong><%= @meeting.venue.name unless @meeting.venue.blank? %></strong></p>
 
 <button id="venues_search_button" >Edit venue (Foursquare)</button>
@@ -29,16 +31,6 @@
 <%= render :partial => 'layouts/footer', :locals => { :footer_tab => 'list' } %>
 
 <script type="text/javascript">
-  $("#venues_search_button").bind( "click", function(event, ui) {
-    $.ajax("<%= find_nearby_venues_path %>", {  
-        // type: 'POST',
-        data: { meeting_id: <%= @meeting.id %> },
-        success: function(data) { 
-          // alert(data) 
-        },
-        error: function() { alert('error in updating location list!') }
-    });
-  });
 
   $("#new_note_button").bind( "click", function(event, ui) {
     var text = $("#note_textarea");
@@ -57,4 +49,84 @@
       alert("A note can not be blank");
     }
   });
+  // $("#venues_search_button").bind( "click", function(event, ui) {
+  //   $.ajax("<%= find_nearby_venues_path %>", {  
+  //       // type: 'POST',
+  //       data: { meeting_id: <%= @meeting.id %> },
+  //       success: function(data) { 
+  //         // alert(data) 
+  //       },
+  //       error: function() { alert('error in updating location list!') }
+  //   });
+  // });
+
+  var getVenuesList = function(event, ui) {
+    $.ajax("<%= find_nearby_venues_path %>", {  
+        // type: 'POST',
+        data: { meeting_id: <%= @meeting.id %> },
+        success: function(data) { 
+          // alert(data) 
+        },
+        error: function() { alert('error in updating location list!') }
+    });
+  }
+
+  $("#venues_search_button").bind( "click", getVenuesList);
+
+  var map;
+
+  var initializeMap = function(){
+    var pos = new google.maps.LatLng(<%= @meeting.latitude %>, <%= @meeting.longitude %>);
+    var mapOptions = {
+      center: pos,
+      zoom: 16,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    map = new google.maps.Map(document.getElementById("meeting-map-canvas"), mapOptions);
+
+    <% if @meeting.venue && @meeting.venue.icon %>
+    var icon = "<%= @meeting.venue.icon %>";
+    var message = "<%= @meeting.venue.name %>";
+    <% elsif @meeting.venue %>
+    var icon = "<%= asset_path 'marker_edit.png' %>";
+    var message = "<%= @meeting.venue.name %>";
+    <% else %>
+    var icon = "<%= asset_path 'marker_edit.png' %>";
+    var message = "Unknown place";
+    <% end %>
+    marker = new google.maps.Marker({
+      position: pos,
+      icon: icon,
+      map: map
+    });
+
+    // var infowindow = new google.maps.InfoWindow(
+    //     { content: message,
+    //       size: new google.maps.Size(10,10),
+    //       maxWidth: 20
+    //     });
+    // infowindow.open(map,marker);
+
+    google.maps.event.addListener(marker, 'click', getVenuesList);
+
+    new MarkerWithLabel({
+      position: pos,
+      draggable: false,
+      raiseOnDrag: true,
+      map: map,
+      labelContent: message,
+      labelAnchor: new google.maps.Point(message.length*3.2, 50),
+      labelClass: "map_labels", // the CSS class for the label
+      labelStyle: {opacity: 1},
+      icon: {}
+    });
+    
+  }
+
+  
+  $('#meeting_show_page').on('pageshow', function (event) {
+    initializeMap();
+  });
+
 </script>
