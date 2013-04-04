@@ -3,7 +3,7 @@
 <% end %>
 <% content_for :heading do %>
 
-  <%= link_to "Manual", user_manual_entry_path(current_user), 
+  <%#= link_to "Manual", user_manual_entry_path(current_user), 
           "data-icon" => "plus", "data-role" => "button", "class" => "ui-btn-left" %>
   
   <%= link_to "Refresh", "#", "onclick" => "refreshCatchupPage()", 
