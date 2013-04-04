@@ -23,14 +23,13 @@
 <script type="text/javascript">
   var getListDataId;
   $(document).on('pageshow', '#new_meeting_page', function (event) {
-    info.html("");
-    // updates the current locatin of the user
-    getPosition(sendGeoLocPosition);
-    // updates the list every few seconds
-    getListDataId = setInterval(function(){
-      getListData();
-    }, 2000);
-  }).on('pagebeforehide', '#new_meeting_page', function (event) {
+      // updates the current locatin of the user
+      getPosition(sendGeoLocPosition);
+      // updates the list every few seconds
+      getListDataId = setInterval(function(){
+        getListData();
+      }, 2000);
+    }).on('pagebeforehide', '#new_meeting_page', function (event) {
     // stops updating the page every few seconds
     clearInterval(getListDataId);
   });
@@ -65,41 +64,41 @@
   }
 
   function getPosition(sendGeoLocPosition) {
-  if ( navigator.geolocation ) {
-    //alert("geolocalisation supported");
-    navigator.geolocation.getCurrentPosition( 
-        sendGeoLocPosition, 
-        errorCallback,
-        {
-          enableHighAccuracy : true,
-          timeout : 10000,
-          maximumAge : 60000 //60 seconds
-        }
-      );
-  } else {
-    alert("geolocalisation not supported");
-  // geolocalisation not supported
+    if ( navigator.geolocation ) {
+      //alert("geolocalisation supported");
+      navigator.geolocation.getCurrentPosition( 
+          sendGeoLocPosition, 
+          errorCallback,
+          {
+            enableHighAccuracy : true,
+            timeout : 10000,
+            maximumAge : 60000 //60 seconds
+          }
+        );
+    } else {
+      alert("geolocalisation not supported");
+    // geolocalisation not supported
+    }
   }
-}
 
-var errorCallback = function(error){
-  // alert(error);
-  switch(error.code)
-  {
-    case error.PERMISSION_DENIED:
-      alert("Request for geolocation denied.");
-      break;
-    case error.POSITION_UNAVAILABLE:
-      alert("Location information is unavailable.");
-      break;
-    case error.TIMEOUT:
-      alert("The request to get user location timed out.");
-      break;
-    case error.UNKNOWN_ERROR:
-      alert("An unknown error occurred.");
-      break;
-  }  
+  var errorCallback = function(error){
+    // alert(error);
+    switch(error.code)
+    {
+      case error.PERMISSION_DENIED:
+        alert("Request for geolocation denied.");
+        break;
+      case error.POSITION_UNAVAILABLE:
+        alert("Location information is unavailable.");
+        break;
+      case error.TIMEOUT:
+        alert("The request to get user location timed out.");
+        break;
+      case error.UNKNOWN_ERROR:
+        alert("An unknown error occurred.");
+        break;
+    }  
 
-}
+  }
 
 </script>
