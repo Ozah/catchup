@@ -8,7 +8,7 @@
   <h1><%= "#{@other_users[0].name}"%> </h1>
 <% end %>
 
-<div id="meeting-map-canvas" style="width: 100%; height: 150px;"></div>
+<div id="meeting-map-canvas" style="width: 100%; height: 170px;"></div>
 
 <ul id="meeting_venues_list" data-role="listview" data-inset="true">
 </ul>
@@ -67,7 +67,7 @@
     var pos = new google.maps.LatLng(lat, lng);
     var mapOptions = {
       center: pos,
-      zoom: 16,
+      zoom: 15,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map = new google.maps.Map(document.getElementById("meeting-map-canvas"), mapOptions);
@@ -92,7 +92,7 @@
     var pos = new google.maps.LatLng(<%= @meeting.latitude %>, <%= @meeting.longitude %>);
     var mapOptions = {
       center: pos,
-      zoom: 16,
+      zoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
