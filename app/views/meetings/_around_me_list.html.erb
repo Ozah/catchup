@@ -30,7 +30,7 @@
 <% unless catching_up_with.blank? %>
 	<% catching_up_with.each do |item| %>
 	  <li data-theme="b" id="catching_up_with">
-	    <%= link_to item[:user].name, edit_user_meeting_path(current_user, item[:meeting]) %>
+	    <%= link_to item[:user].name, user_meeting_path(current_user, item[:meeting]) %>
 	  </li>
 	<% end %>
 <% end %>

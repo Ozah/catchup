@@ -119,9 +119,15 @@ class MeetingsController < ApplicationController
     @meeting.users.each do |user|
       user.venues << @venue unless user.venues.include?(@venue)
     end
-
+    if @meeting.venue && !@meeting.venue.icon.blank?
+      icon = @venue.icon
+    else
+      icon = nil
+    end
+    @marker = { lat: @venue.latitude, lng: @venue.longitude, name: @venue.name, icon: icon }
+    puts("slkdjafghlaksjdhfbalkjsdbf!!!!!!!!!!!!!!!!!!!!!!!:  #{@marker}")
     respond_to do |format|
-      format.js
+      format.js #{ render json: { marker: @marker } }
     end
   end
 
@@ -129,7 +135,7 @@ class MeetingsController < ApplicationController
     update_list
 
     respond_to do |format|
-      format.js
+      format.js 
     end
   end
 

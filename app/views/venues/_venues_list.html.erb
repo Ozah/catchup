@@ -1,6 +1,11 @@
+<li>
+	<p><strong>Powerd by Foursquare</strong></p>
+</li>
 <% venues["nearby"].each do |venue| %>
 	<li>
-		<%= link_to venue.name, update_venue_path(venue_id: venue.id, meeting_id: meeting.id), remote: true %>
+		<%= link_to venue.name, update_venue_path(venue_id: venue.id, meeting_id: meeting.id), 
+						remote: true,
+						class: "venue_list_link" %>
 		<%#= venue.name %>
 	</li>
 <% end %>

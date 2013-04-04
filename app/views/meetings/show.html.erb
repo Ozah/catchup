@@ -5,19 +5,15 @@
   <%= link_to "Back", user_show_list_path(current_user), "data-icon" => "back",
                 "data-role" => "button", "class" => "ui-btn-left" %>
     
-  <h1><%= @other_users[0].name %></h1>
+  <h1><%= "#{@other_users[0].name}"%> </h1>
 <% end %>
 
-<p><%= "#{@meeting.created_at.strftime("%d/%m/%Y %R")}" %></p>
-
-<div id="meeting-map-canvas" style="width: 100%; height: 250px;"></div>
-
-<p id="meeting_venue_name"><strong><%= @meeting.venue.name unless @meeting.venue.blank? %></strong></p>
-
-<button id="venues_search_button" >Edit venue (Foursquare)</button>
+<div id="meeting-map-canvas" style="width: 100%; height: 150px;"></div>
 
 <ul id="meeting_venues_list" data-role="listview" data-inset="true">
 </ul>
+
+<p><strong><%= "#{@meeting.created_at.strftime("%d/%m/%Y %R")}" %></strong></p>
 
 <ul data-role="listview" data-inset="true"  id="notes_list" data-split-icon="delete" data-split-theme="a">
     <%= render @meeting.notes %>
@@ -26,7 +22,7 @@
 <%#= render :partial => 'notes/form', :locals => { :meeting_id => @meeting.id }  %>
 
 <textarea name="textarea" id="note_textarea" placeholder="New note"></textarea>
-<button id="new_note_button">Add</button>
+<button id="new_note_button">Add note</button>
 
 <%= render :partial => 'layouts/footer', :locals => { :footer_tab => 'list' } %>
 
@@ -49,16 +45,6 @@
       alert("A note can not be blank");
     }
   });
-  // $("#venues_search_button").bind( "click", function(event, ui) {
-  //   $.ajax("<%= find_nearby_venues_path %>", {  
-  //       // type: 'POST',
-  //       data: { meeting_id: <%= @meeting.id %> },
-  //       success: function(data) { 
-  //         // alert(data) 
-  //       },
-  //       error: function() { alert('error in updating location list!') }
-  //   });
-  // });
 
   var getVenuesList = function(event, ui) {
     $.ajax("<%= find_nearby_venues_path %>", {  
@@ -71,9 +57,36 @@
     });
   }
 
-  $("#venues_search_button").bind( "click", getVenuesList);
+  // $("#venues_search_button").bind( "click", getVenuesList);
 
   var map;
+
+  // lat: meeting.latitude, lng: meeting.longitude, name: user.name, icon: icon
+  var resetMarker = function(lat, lng, name, icon){
+    
+    var pos = new google.maps.LatLng(lat, lng);
+    var mapOptions = {
+      center: pos,
+      zoom: 16,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById("meeting-map-canvas"), mapOptions);
+
+    
+    marker_with_label = new MarkerWithLabel({
+      position: pos,
+      draggable: false,
+      raiseOnDrag: true,
+      map: map,
+      labelContent: name,
+      labelAnchor: new google.maps.Point(name.length*3.2, 50),
+      labelClass: "map_labels", // the CSS class for the label
+      labelStyle: {opacity: 1},
+      icon: icon
+    });
+    
+    google.maps.event.addListener(marker_with_label, 'click', getVenuesList);  
+  }
 
   var initializeMap = function(){
     var pos = new google.maps.LatLng(<%= @meeting.latitude %>, <%= @meeting.longitude %>);
@@ -95,22 +108,7 @@
     var icon = "<%= asset_path 'marker_edit.png' %>";
     var message = "Unknown place";
     <% end %>
-    marker = new google.maps.Marker({
-      position: pos,
-      icon: icon,
-      map: map
-    });
-
-    // var infowindow = new google.maps.InfoWindow(
-    //     { content: message,
-    //       size: new google.maps.Size(10,10),
-    //       maxWidth: 20
-    //     });
-    // infowindow.open(map,marker);
-
-    google.maps.event.addListener(marker, 'click', getVenuesList);
-
-    new MarkerWithLabel({
+    marker_with_label = new MarkerWithLabel({
       position: pos,
       draggable: false,
       raiseOnDrag: true,
@@ -119,8 +117,26 @@
       labelAnchor: new google.maps.Point(message.length*3.2, 50),
       labelClass: "map_labels", // the CSS class for the label
       labelStyle: {opacity: 1},
-      icon: {}
+      icon: icon
+      // icon: {}
     });
+
+    // marker = new google.maps.Marker({
+    //   position: pos,
+    //   icon: icon,
+    //   map: map
+    // });
+
+    // var infowindow = new google.maps.InfoWindow(
+    //     { content: message,
+    //       size: new google.maps.Size(10,10),
+    //       maxWidth: 20
+    //     });
+    // infowindow.open(map,marker);
+
+    
+    // google.maps.event.addListener(marker, 'click', getVenuesList);
+    google.maps.event.addListener(marker_with_label, 'click', getVenuesList);
     
   }
 

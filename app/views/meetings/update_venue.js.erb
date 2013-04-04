@@ -1,3 +1,8 @@
 $("#meeting_venues_list").empty().listview('refresh');
-$("#meeting_venue_name").text("<%= @meeting.venue.name %>");
-$('#show_list').listview('refresh');
+// lat: meeting.latitude, lng: meeting.longitude, name: user.name, icon: icon
+resetMarker("<%= @marker[:lat] %>", "<%= @marker[:lng] %>", "<%= @marker[:name] %>", "<%= @marker[:icon] %>");
+
+// $(".venue_list_link").bind('ajax:success', function(json) {
+// 		// alert("boo");
+// 	});
+// $('#show_list').listview('refresh');

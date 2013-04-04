@@ -6,7 +6,7 @@
       when footer_tab == 'contacts' then contacts_class = active
       when footer_tab == 'catchup'  then catchup_class  = active
       when footer_tab == 'list'     then list_class     = active
-      when footer_tab == 'info'     then info_class     = active
+      when footer_tab == 'map'     then map_class      = active
    end
 %>
 <div data-role="footer" data-id="main-footer" data-position="fixed" data-tap-toggle="false" id="main-footer">
@@ -24,8 +24,8 @@
       <li><%= link_to "History", user_show_list_path(current_user),"data-icon" => "grid",
                       "class" => list_class %>
       </li>
-      <li><%= link_to "Info", help_path,"data-icon" => "info",
-                      "class" => info_class %>
+      <li><%= link_to "Map", user_show_map_path(current_user),"data-icon" => "grid",
+                      "class" => map_class %>
       </li>
     </ul>
   </div>

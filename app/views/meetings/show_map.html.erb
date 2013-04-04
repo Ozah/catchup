@@ -3,7 +3,7 @@
 <% end %>
 <% content_for :heading do %>
   <button onclick="refresh()" class="ui-btn-left" data-icon= "refresh">Refresh</button>
-  <%= link_to "List", user_show_list_path(current_user), "data-icon" => "grid",
+  <%#= link_to "List", user_show_list_path(current_user), "data-icon" => "grid",
               "data-role" => "button", "class" => "ui-btn-right" %>
   <h1>Map </h1>
 <% end %>
@@ -25,6 +25,7 @@
   }
 
   var initializeMap = function(json){
+    // alert(json["markers"][0].name);
     // alert(json["markers"][1].name);
     markers = json["markers"];
     var pos = new google.maps.LatLng(markers[markers.length-1].lat, markers[markers.length-1].lng);
@@ -76,7 +77,7 @@
 
 </script>
 
-<%= render :partial => 'layouts/footer', :locals => {:footer_tab => "list"} %>
+<%= render :partial => 'layouts/footer', :locals => {:footer_tab => "map"} %>
 
 
 
