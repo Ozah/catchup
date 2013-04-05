@@ -8,7 +8,7 @@
   <% end %>
   <% if current_user?(info.user) %>
     <%= link_to "delete", info, method: :delete,
-                data: { confirm: "You sure?" },
+                data: { confirm: "Are you sure?" },
                 title: "delete",
                 "data-position-to" => "window"
     %>

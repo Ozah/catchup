@@ -1,21 +1,19 @@
 <% content_for :page_div do %>
-  <div class="page" data-role="page" data-fullscreen="true" id="user_show_contacts_page">
+  <div class="page" data-role="page" id="user_show_contacts_page">
 <% end %>
 <% content_for :heading do %>
   <h1>Contacts</h1>
 <% end %>
 
-<div data-role="content">
-  <% if @contacts.any? %>
-    <ul data-role="listview" data-inset="true" data-split-icon="delete" data-split-theme="a">
-      <% @contacts.each do |contact| %>
-        <li>
-          <%= link_to contact.name, user_path(contact) %>
-        </li>
-      <% end %>
+<% if @contacts.any? %>
+  <ul data-role="listview" data-inset="true" data-split-icon="delete" data-split-theme="a">
+    <% @contacts.each do |contact| %>
+      <li>
+        <%= link_to contact.name, user_path(contact) %>
+      </li>
+    <% end %>
 
-    </ul>
-  <% end %>
-</div>
+  </ul>
+<% end %>
 
 <%= render :partial => 'layouts/footer', :locals => {:footer_tab => "contacts"} %>

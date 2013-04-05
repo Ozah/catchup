@@ -6,7 +6,7 @@
   </a>
   <% if current_user?(note.user) %>
     <%= link_to "delete", note, method: :delete,
-                data: { confirm: "You sure?" },
+                data: { confirm: "Are you sure?" },
                 title: "delete",
                 "data-position-to" => "window",
                 remote: true

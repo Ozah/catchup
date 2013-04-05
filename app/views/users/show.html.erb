@@ -1,5 +1,5 @@
 <% content_for :page_div do %>
-  <div class="page" data-role="page" data-fullscreen="true" id="user_show_page">
+  <div class="page" data-role="page" id="user_show_page">
 <% end %>
 <% content_for :heading do %>
   <% unless current_user?(@user) %>
@@ -40,7 +40,6 @@ My links:
               "data-iconpos" => "notext",
               "data-theme" => "a" %>
 <% end %>
-
 
 <% if current_user?(@user) %>
   <%= render :partial => 'layouts/footer', :locals => { :footer_tab => 'profile' } %>

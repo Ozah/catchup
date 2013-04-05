@@ -1,5 +1,10 @@
 <% content_for :page_div do %>
-  <div class="page" data-role="page" data-fullscreen="true" id="start_page">
+  <div class="page" data-role="page" id="start_page">
+<% end %>
+<% content_for :heading do %>
+  <%#= link_to "Map", user_show_map_path(current_user), "data-icon" => "grid",
+              "data-role" => "button", "class" => "ui-btn-right" %>
+  <h1>WELCOME!</h1>
 <% end %>
 <div>
   <p style="text-align: center; ">
