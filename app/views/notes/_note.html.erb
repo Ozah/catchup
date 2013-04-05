@@ -1,8 +1,13 @@
 <li <%= "id=note_#{note.id}" %>>
 	<a href="">
-  	<p><%= note.user.name %></p>
-  	<h3><%= note.content %> </h3>
-  	<p class="ui-li-aside ui-li-desc"><%= note.created_at.strftime("%d/%m/%Y %R") %></p>
+  	<font style="font-size: small"><%= note.user.name %></font>
+    </br></br>
+    <!-- awful trick to display the content on multiple lines -->
+    <% note_str = note.content 
+      until note_str.blank? do %>
+      <p><%= note_str.slice!(0..30) %></p>
+    <% end %>
+  	<font class="ui-li-aside ui-li-desc"><%= note.created_at.strftime("%d/%m/%Y %R") %></font>
   </a>
   <% if current_user?(note.user) %>
     <%= link_to "delete", note, method: :delete,

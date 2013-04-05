@@ -36,19 +36,19 @@
 </head>
 <body>
   <%= yield :page_div %>
-    <div data-theme="a" data-role="header" data-theme="b">
+    <div data-theme="a" data-role="header" data-position="fixed">
       <%= yield :heading %>
     </div>
     <div id="info"></div>
-    <div data-role="content" id="container">
-      <% flash.each do |key, value| %>
-        <%= content_tag(:div, value, id: "alert-#{key}") %>
-      <% end %>
+    
+    <!-- this stays on the page when navigating on the footer since ajax is used by jqm -->
+    <%# flash.each do |key, value| %>
+      <%#= content_tag(:div, value, id: "alert-#{key}") %>
+    <%# end %>
 
-      <%= yield %>
+    <%= yield %>
 
-      <%#= debug(params) if Rails.env.development? %>
-    </div>
+    <%#= debug(params) if Rails.env.development? %>
   </div>
 </body>
 </html>

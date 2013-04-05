@@ -16,7 +16,7 @@ class Note < ActiveRecord::Base
   belongs_to :user
   belongs_to :meeting
 
-  validates :content, presence: true, length: { maximum: 80 }
+  validates :content, presence: true #, length: { maximum: 80 }
   validates :user_id, presence: true
   validates :meeting_id, presence: true
 end
