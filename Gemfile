@@ -22,6 +22,7 @@ gem "quimby"
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'thin'
 end
 
 group :development do
