@@ -19,10 +19,10 @@ gem 'geocoder'
 gem "json"
 gem "typhoeus"
 gem "quimby"
+gem 'thin'
 
 group :development, :test do
   gem 'rspec-rails'
-  gem 'thin'
 end
 
 group :development do
