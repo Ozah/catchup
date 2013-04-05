@@ -17,11 +17,6 @@
   <!-- Google maps stuff -->
   <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBYIeys4U0Yx8ac2dUQ9uwJzEgvbyN7WbM&sensor=true" %>
   <%= javascript_include_tag "/assets/markerwithlabel.js" %>
-  <%#= javascript_include_tag "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/styledmarker/src/StyledMarker.js" %>
-  <%#= javascript_include_tag "ui_map/min/jquery.ui.map.min.js" %>
-  <%#= javascript_include_tag "ui_map/min/jquery.ui.map.overlays.min.js" %>
-  <%#= javascript_include_tag "ui_map/min/jquery.ui.map.services.min.js" %>
-  <%#= javascript_include_tag "ui_map/jquery.ui.map.extensions.js" %>
   <!-- End of google maps stuff -->
 
   <%= javascript_include_tag "my.js" %>
@@ -40,11 +35,11 @@
       <%= yield :heading %>
     </div>
     <div id="info"></div>
-    
-    <!-- this stays on the page when navigating on the footer since ajax is used by jqm -->
-    <%# flash.each do |key, value| %>
-      <%#= content_tag(:div, value, id: "alert-#{key}") %>
-    <%# end %>
+
+    <!-- TODO this stays on the page when navigating on the footer since ajax is used by jqm -->
+    <% flash.each do |key, value| %>
+      <%= content_tag(:div, value, id: "alert-#{key}") %>
+    <% end %>
 
     <%= yield %>
 

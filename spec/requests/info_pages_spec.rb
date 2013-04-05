@@ -37,7 +37,7 @@ describe "InfoPages" do
       before { visit user_path(user) }
 
       it "should delete an info" do
-        expect { click_link "delete" }.to change(Info, :count).by(-1)
+        expect { click_link 'delete_info' }.to change(Info, :count).by(-1)
       end
     end
 
@@ -45,10 +45,11 @@ describe "InfoPages" do
       let(:user2) { FactoryGirl.create(:user) }
       before do
         FactoryGirl.create(:info, user: user2)
+        user.add_contact!(user2)
         visit user_path(user2)
       end
 
-      it { should_not have_link('delete') }
+      it { should_not have_link('delete_info') }
 
     end
   end

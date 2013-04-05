@@ -23,7 +23,7 @@ describe "User pages" do
       it { should have_link("Contacts", href: contacts_path) }
       it { should have_link("Catchup", href: new_user_meeting_path(user)) }
       it { should have_link("History", href: user_show_list_path(user)) }
-      it { should have_link("Info", href: help_path) }
+      it { should have_link("Map", href: user_show_map_path(user)) }
     end
 
     describe "infos" do
@@ -100,7 +100,7 @@ describe "User pages" do
         let(:user) { User.find_by_email('user@example.com') }
 
         it { should have_selector('h1', text: user.name) }
-        it { should have_selector('div#alert-success', text: 'Welcome') }
+        # it { should have_selector('div#alert-success', text: 'Welcome') }
       end
     end
 
@@ -117,7 +117,7 @@ describe "User pages" do
         before { click_button submit }
 
         it { should have_selector('h1', text: "Example User") }
-        it { should have_selector('div#alert-success', text: 'Welcome') }
+        # it { should have_selector('div#alert-success', text: 'Welcome') }
       end
     end
   end

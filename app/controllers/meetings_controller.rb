@@ -125,9 +125,8 @@ class MeetingsController < ApplicationController
       icon = nil
     end
     @marker = { lat: @venue.latitude, lng: @venue.longitude, name: @venue.name, icon: icon }
-    puts("slkdjafghlaksjdhfbalkjsdbf!!!!!!!!!!!!!!!!!!!!!!!:  #{@marker}")
     respond_to do |format|
-      format.js #{ render json: { marker: @marker } }
+      format.js
     end
   end
 

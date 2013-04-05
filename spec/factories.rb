@@ -41,6 +41,12 @@ FactoryGirl.define do
       location_time { Time.now }
     end 
 
+    factory :user_250m_away_now do
+      longitude 2.439168 
+      latitude 48.849325
+      location_time { Time.now }
+    end 
+
   end
 
   factory :info do

@@ -18,7 +18,7 @@ describe "Meeting Pages" do
   	it do
       should have_selector('h1', text: "Catch up") 
       should have_link("Refresh") 
-      should have_link("Manual") 
+      # should have_link("Manual") 
       should have_selector('#around_me_list') 
       should have_selector('#no_one_arround') 
       find('#around_me_list').should_not have_selector('li') 
@@ -105,8 +105,8 @@ describe "Meeting Pages" do
       end
     end
 
-    describe "user2 at 100m, now" do
-      let(:user2) { FactoryGirl.create(:user_100m_away_now) }
+    describe "user2 far away, now" do
+      let(:user2) { FactoryGirl.create(:user_250m_away_now) }
 
       before do
         user2.location_time = time
